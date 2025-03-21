@@ -3,6 +3,11 @@ import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.ts'
 
+import '@shoelace-style/shoelace/dist/themes/light.css';
+import '@shoelace-style/shoelace/dist/components/copy-button/copy-button.js';
+import '@shoelace-style/shoelace/dist/components/relative-time/relative-time.js';
+import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
+
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
     <a href="https://vite.dev" target="_blank">
