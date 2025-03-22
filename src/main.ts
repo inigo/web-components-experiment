@@ -12,9 +12,24 @@ import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/icon/icon.js';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 import {setupCssActions} from "./cssactions/cssactions.ts";
+import TomSelect from "tom-select/popular";
+import "tom-select/dist/css/tom-select.default.css";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
 
 initCookieConsent();
 setupCssActions();
+
+document.querySelectorAll('.slct').forEach((el)=>{
+    let settings = {
+        plugins: {
+            remove_button:{
+                title:'Remove this item',
+            }
+        },
+        hidePlaceholder: true,
+    };
+    // @ts-ignore
+    new TomSelect(el,settings);
+});

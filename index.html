@@ -12,14 +12,38 @@
 </header>
 
 <nav class="bg-blue-100 flex flex-col min-w-0 overflow-hidden">
-    <div class="p-4 hide-if-collapse-nav">
+    <div class="p-4 hide-if-collapse-nav flex flex-col gap-8">
         <div class="flex flex-row justify-end">
+            <h2 class="mr-auto font-extrabold text-2xl self-end">Navigation</h2>
+
             <sl-tooltip content="Hide navigation">
                 <button class="btn btn-outline btn-info" data-action="addClass" data-class="collapse-nav" data-target="body"
                         aria-label="Hide navigation">
                      <sl-icon name="chevron-double-left"></sl-icon>
                 </button>
             </sl-tooltip>
+        </div>
+
+        <div class="flex flex-col gap-4">
+
+            <select id="select-state" class="slct" name="state[]" multiple placeholder="Select a state..." autocomplete="off">
+                <option value="">Select a state...</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+                <option value="AR">Arkansas</option>
+                <option value="CA" selected>California</option>
+                <option value="CO">Colorado</option>
+                <option value="WY" selected>Wyoming</option>
+            </select>
+
+            <select id="select-cheese" class="slct" name="cheese[]" multiple placeholder="Select a cheese..." autocomplete="off">
+                <option value="">Select a cheese...</option>
+                <option value="AL">Brie</option>
+                <option value="AK">Cheddar</option>
+                <option value="AZ">Gouda</option>
+            </select>
+
         </div>
     </div>
 </nav>
