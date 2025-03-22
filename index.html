@@ -12,11 +12,14 @@
 </header>
 
 <nav class="bg-blue-100 flex flex-col min-w-0 overflow-hidden">
-    <div class="p-2 hide-if-collapse-nav">
+    <div class="p-4 hide-if-collapse-nav">
         <div class="flex flex-row justify-end">
-            <button class="btn btn-outline btn-info" data-action="addClass" data-class="collapse-nav" data-target="body">
-                <sl-icon name="chevron-double-left"></sl-icon>
-            </button>
+            <sl-tooltip content="Hide navigation">
+                <button class="btn btn-outline btn-info" data-action="addClass" data-class="collapse-nav" data-target="body"
+                        aria-label="Hide navigation">
+                     <sl-icon name="chevron-double-left"></sl-icon>
+                </button>
+            </sl-tooltip>
         </div>
     </div>
 </nav>
@@ -27,9 +30,12 @@
 
 <main class="flex flex-col gap-2 p-4 grid-area-main">
     <div class="flex flex-row justify-end gap-2">
-        <button class="btn btn-outline btn-info show-if-collapse-nav mr-auto" data-action="removeClass" data-class="collapse-nav" data-target="body">
-            <sl-icon name="chevron-double-right"></sl-icon>
-        </button>
+        <sl-tooltip content="Show navigation">
+            <button class="btn btn-outline btn-info show-if-collapse-nav mr-auto" data-action="removeClass" data-class="collapse-nav" data-target="body"
+                    aria-label="Show navigation">
+                <sl-icon name="chevron-double-right"></sl-icon>
+            </button>
+        </sl-tooltip>
 
         <button hx-get="/api/data" hx-trigger="click" hx-target="#result" class="btn btn-primary">
             Load Data

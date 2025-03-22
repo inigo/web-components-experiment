@@ -42,6 +42,6 @@ body {
 
 /* Hide the nav when the collapse-nav class is added to it */
 body.collapse-nav { grid-template-columns: 0 1fr; }
-.collapse-nav .hide-if-collapse-nav { display: none; }
-.show-if-collapse-nav { display: none; }
-.collapse-nav .show-if-collapse-nav { display: block; }
+.collapse-nav .hide-if-collapse-nav { opacity: 0; transition: opacity 10s ease; }
+.show-if-collapse-nav { opacity: 0; pointer-events: none; visibility: hidden; }
+.collapse-nav .show-if-collapse-nav { opacity: 1; transition: opacity 1s ease; pointer-events: auto; visibility: visible; }
