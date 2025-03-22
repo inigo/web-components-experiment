@@ -2,6 +2,8 @@ import './style.css'
 import typescriptLogo from './typescript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.ts'
+import {DataTable} from "simple-datatables"
+// import {Tabulator} from 'tabulator-tables';
 import * as CookieConsent from "vanilla-cookieconsent";
 
 import '@shoelace-style/shoelace/dist/themes/light.css';
@@ -26,6 +28,31 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
     </p>
   </div>
 `
+
+new DataTable("#myTable", {
+    searchable: false,
+    paging: false,
+});
+
+// var tableData = [
+//     {id:1, name:"Billy Bob", age:"12", gender:"male", height:1, col:"red", dob:"", cheese:1},
+//     {id:2, name:"Mary May", age:"1", gender:"female", height:2, col:"blue", dob:"14/05/1982", cheese:true},
+// ]
+//
+// new Tabulator("#myTable", {
+//     // height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
+//     data:tableData, //assign data to table
+//     // layout:"fitColumns", //fit columns to width of table (optional)
+//     columns:[ //Define Table Columns
+//         {title:"Name", field:"name"},
+//         {title:"Age", field:"age"},
+//         {title:"Gender", field:"gender"},
+//         {title:"Height", field:"height"},
+//         {title:"Favourite Color", field:"col"},
+//         {title:"Date Of Birth", field:"dob"},
+//         {title:"Cheese Preference", field:"cheese"},
+//     ],
+// });
 
 CookieConsent.run({
     // Don't bother with cookie consent if the user has explicitly set "Do not track"
