@@ -32,9 +32,16 @@ body {
   grid-template-rows: 150px 1fr 50px;
   grid-template-columns: 300px 1fr;
   min-height: 100vh;
+  transition: grid-template-columns 0.5s ease;
 }
 
 .grid-area-header { grid-area: header; }
 .grid-area-nav { grid-area: nav; }
 .grid-area-main { grid-area: main; }
 .grid-area-footer { grid-area: footer; }
+
+/* Hide the nav when the collapse-nav class is added to it */
+body.collapse-nav { grid-template-columns: 0 1fr; }
+.collapse-nav .hide-if-collapse-nav { display: none; }
+.show-if-collapse-nav { display: none; }
+.collapse-nav .show-if-collapse-nav { display: block; }
