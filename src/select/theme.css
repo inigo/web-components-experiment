@@ -1,0 +1,10 @@
+:root {
+  --ss-primary-color: var(--color-primary) !important;
+  --ss-primary-content: var(--color-primary-content) !important;
+  --ss-secondary-color: var(--color-secondary) !important;
+  --ss-secondary-content: var(--color-secondary-content) !important;
+  --ss-error-color: var(--color-error) !important;
+  --ss-error-content: var(--color-error-content) !important;
+  --ss-success-color: var(--color-success) !important;
+  --ss-animation-timing: 0s !important;
+}
