@@ -53,7 +53,7 @@
 </footer>
 
 <main class="flex flex-col gap-2 p-4 grid-area-main">
-    <div class="buttons flex gap-4">
+    <div class="buttons flex gap-8">
         <sl-tooltip content="Show navigation">
             <button class="btn btn-outline btn-info show-if-collapse-nav mr-auto" data-action="removeClass" data-class="collapse-nav" data-target="body"
                     aria-label="Show navigation">
@@ -61,12 +61,14 @@
             </button>
         </sl-tooltip>
 
-        <sl-dropdown>
-            <sl-button slot="trigger" caret>Chart type</sl-button>
+        <sl-dropdown class="border-primary" distance="2">
+            <button class="btn btn-primary btn-outline" slot="trigger">Chart type
+                <sl-icon name="caret-down"></sl-icon>
+            </button>
             <sl-menu>
-                <sl-menu-item>Stacked column <sl-icon slot="prefix" name="gift" class="mr-2"></sl-icon></sl-menu-item>
-                <sl-menu-item>Bar <sl-icon slot="prefix" name="gift" class="mr-2"></sl-icon></sl-menu-item>
-                <sl-menu-item>Line <sl-icon slot="prefix" name="gift" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item>Column <sl-icon slot="prefix" src="public/column-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item>Bar <sl-icon slot="prefix" src="public/bar-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item>Line <sl-icon slot="prefix" src="public/line-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
             </sl-menu>
         </sl-dropdown>
 
