@@ -48,12 +48,8 @@ function handleAction(el: HTMLElement) {
         } else if (action === 'showDialog') {
             console.log(`Showing dialog ${target.outerHTML}`);
             const isModal = el.hasAttribute('data-modal') && el.getAttribute('data-modal')==="true";
-            
-            if (target instanceof HTMLDialogElement) {
-                isModal ? target.showModal() : target.show();
-            } else if (target.tagName.toLowerCase() === 'saved-search-dialog') {
-                isModal ? (target as any).showModal() : (target as any).show();
-            }
+            // Could be a <dialog>, or a web component with the same show/showModal functions
+            isModal ? (target as any).showModal() : (target as any).show();
         }
     });
 }
