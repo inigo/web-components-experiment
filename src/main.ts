@@ -14,8 +14,8 @@ import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js'
 import {setupCssActions} from "./actions/actions.ts";
 import {initSelectors} from "./select/select.ts";
 
-import {SavedSearchDialog} from "./components/saved-search-dialog.ts";
-import './components/saved-search-dialog';
+import './savedsearch/saved-search-dialog';
+import {defaultSearchStore} from "./savedsearch/search-store.ts";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
@@ -24,5 +24,4 @@ initCookieConsent();
 setupCssActions();
 initSelectors();
 
-const searchDialog = document.querySelector('saved-search-dialog') as SavedSearchDialog;
-searchDialog.setupDefaultSearches();
+defaultSearchStore.setupDefaultSearches();
