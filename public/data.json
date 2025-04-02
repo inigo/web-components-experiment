@@ -1,0 +1,9 @@
+ {
+     "title": "Types of Cats and Their Populations",
+     "categories": ["Siamese", "Persian", "Maine Coon", "Bengal", "Sphynx"],
+     "series": [
+         { "name": "Indoor", "data": [5, 3, 4, 7, 2] },
+         { "name": "Outdoor", "data": [2, 2, 3, 2, 1] },
+         { "name": "Stray", "data": [1, 1, 2, 1, 3] }
+     ]
+ }
