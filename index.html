@@ -61,58 +61,21 @@
             </button>
         </sl-tooltip>
 
+        <sl-dropdown>
+            <sl-button slot="trigger" caret>Chart type</sl-button>
+            <sl-menu>
+                <sl-menu-item>Stacked column <sl-icon slot="prefix" name="gift" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item>Bar <sl-icon slot="prefix" name="gift" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item>Line <sl-icon slot="prefix" name="gift" class="mr-2"></sl-icon></sl-menu-item>
+            </sl-menu>
+        </sl-dropdown>
+
         <button class="btn btn-primary btn-outline" data-action="showDialog" data-modal="true" data-target="#savedSearchDialog">Saved searches</button>
 
         <button hx-get="/api/data" hx-trigger="click" hx-target="#result" class="btn btn-primary btn-outline">
             Load Data
         </button>
     </div>
-
-    <!-- Shoelace 2 release date 🎉 -->
-    <sl-relative-time date="2020-07-15T09:17:00-04:00"></sl-relative-time>
-
-    <span id="my-phone">+1 (234) 456-7890</span>
-    <sl-copy-button from="my-phone"></sl-copy-button>
-
-    <div class="chat chat-start">
-        <div class="chat-bubble">
-            It's over Anakin,
-            <br/>
-            I have the high ground.
-        </div>
-    </div>
-    <sl-tooltip content="This is a chat">
-        <div class="chat chat-end">
-            <div class="chat-bubble">You underestimate my power!</div>
-        </div>
-    </sl-tooltip>
-
-    <sl-dropdown>
-        <sl-button slot="trigger" caret>Dropdown</sl-button>
-        <sl-menu>
-            <sl-menu-item>Dropdown Item 1</sl-menu-item>
-            <sl-menu-item>Dropdown Item 2</sl-menu-item>
-            <sl-menu-item>Dropdown Item 3</sl-menu-item>
-            <sl-divider></sl-divider>
-            <sl-menu-item type="checkbox" checked>Checkbox</sl-menu-item>
-            <sl-menu-item disabled>Disabled</sl-menu-item>
-            <sl-divider></sl-divider>
-            <sl-menu-item>
-                Prefix
-                <sl-icon slot="prefix" name="gift"></sl-icon>
-            </sl-menu-item>
-            <sl-menu-item>
-                Suffix Icon
-                <sl-icon slot="suffix" name="heart"></sl-icon>
-            </sl-menu-item>
-        </sl-menu>
-    </sl-dropdown>
-
-    <div>
-        Icons:
-        <sl-icon slot="prefix" name="gift"></sl-icon>
-    </div>
-
 
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 overflow-y-auto max-h-96">
         <table id="myTable" class="table">
