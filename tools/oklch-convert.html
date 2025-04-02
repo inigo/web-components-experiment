@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OKLCH to Hex Converter</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>OKLCH to Hex Converter</h1>
+    <div id="output"></div>
+
+    <script>
+        // These are the corporate theme values
+        const colors = {
+            'color-base-100': 'oklch(100% 0 0)',
+            'color-base-200': 'oklch(93% 0 0)',
+            'color-base-300': 'oklch(86% 0 0)',
+            'color-base-content': 'oklch(22.389% .031 278.072)',
+            'color-primary': 'oklch(58% .158 241.966)',
+            'color-primary-content': 'oklch(100% 0 0)',
+            'color-secondary': 'oklch(55% .046 257.417)',
+            'color-secondary-content': 'oklch(100% 0 0)',
+            'color-accent': 'oklch(60% .118 184.704)',
+            'color-accent-content': 'oklch(100% 0 0)',
+            'color-neutral': 'oklch(0% 0 0)',
+            'color-neutral-content': 'oklch(100% 0 0)',
+            'color-info': 'oklch(60% .126 221.723)',
+            'color-info-content': 'oklch(100% 0 0)',
+            'color-success': 'oklch(62% .194 149.214)',
+            'color-success-content': 'oklch(100% 0 0)',
+            'color-warning': 'oklch(85% .199 91.936)',
+            'color-warning-content': 'oklch(0% 0 0)',
+            'color-error': 'oklch(70% .191 22.216)',
+            'color-error-content': 'oklch(0% 0 0)',
+        };
+
+        // Function to convert OKLCH to RGB
+        function oklchToRgb(l, c, h) {
+            // Convert to CSS color for browser to parse
+            const div = document.createElement('div');
+            div.style.color = `oklch(${l} ${c} ${h})`;
+            document.body.appendChild(div);
+            
+            // Get computed RGB
+            const computed = window.getComputedStyle(div).color;
+            document.body.removeChild(div);
+            
+            // Extract RGB values
+            const match = computed.match(/rgb\((\d+), (\d+), (\d+)\)/);
+            if (match) {
+                return {
+                    r: parseInt(match[1], 10),
+                    g: parseInt(match[2], 10),
+                    b: parseInt(match[3], 10)
+                };
+            }
+            
+            return { r: 0, g: 0, b: 0 };
+        }
+
+        // Function to convert RGB to hex
+        function rgbToHex(r, g, b) {
+            return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+        }
+
+        // Parse OKLCH string and convert to hex
+        function oklchStringToHex(oklchStr) {
+            const match = oklchStr.match(/oklch\((\d+(?:\.\d+)?)%\s+(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)\)/);
+            if (match) {
+                const l = parseFloat(match[1]) / 100;
+                const c = parseFloat(match[2]);
+                const h = parseFloat(match[3]);
+                const rgb = oklchToRgb(l, c, h);
+                return rgbToHex(rgb.r, rgb.g, rgb.b);
+            }
+            return "#000000"; // Default black
+        }
+
+        // Convert and output all colors
+        let output = '<pre>';
+        for (const [name, value] of Object.entries(colors)) {
+            try {
+                const hex = oklchStringToHex(value);
+                output += `$${name.replace(/-/g, '-')}: ${hex}; // ${value}\n`;
+            } catch (e) {
+                output += `// Error converting ${name}: ${e.message}\n`;
+            }
+        }
+        output += '</pre>';
+        
+        document.getElementById('output').innerHTML = output;
+    </script>
+</body>
+</html>
