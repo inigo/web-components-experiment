@@ -79,6 +79,10 @@
         </button>
     </div>
 
+    <div id="chart" data-query="anotherQuery" data-title="anotherTitle">
+
+    </div>
+
     <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 overflow-y-auto max-h-96">
         <table id="myTable" class="table">
             <thead>
@@ -237,7 +241,7 @@
 
 </main>
 
-<saved-search-dialog id="savedSearchDialog"></saved-search-dialog>
+<saved-search-dialog id="savedSearchDialog" searchable-selector="#chart"></saved-search-dialog>
 
 <script type="module" src="/src/main.ts"></script>
 </body>

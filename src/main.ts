@@ -15,7 +15,6 @@ import {setupCssActions} from "./actions/actions.ts";
 import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog';
-import {defaultSearchStore} from "./savedsearch/search-store.ts";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
@@ -23,5 +22,3 @@ setBasePath(isDev ? '/dist/' : '.');
 initCookieConsent();
 setupCssActions();
 initSelectors();
-
-defaultSearchStore.setupDefaultSearches();

@@ -7,6 +7,9 @@ export class SavedSearchDialog extends LitElement {
   @property({ type: SearchStore })
   store: SearchStore = defaultSearchStore;
 
+  @property({ type: String, attribute: 'searchable-selector' })
+  searchableSelector = '#searchable'; // Can be overridden with searchable-selector attribute
+
   private unsubscribe = () => {};
 
   connectedCallback() {
@@ -30,12 +33,24 @@ export class SavedSearchDialog extends LitElement {
   showModal() { this.getDialog().showModal() }
   close() { this.getDialog().close() }
 
+  private addCurrentSearch() {
+    console.debug(`Adding current search from element ${this.searchableSelector}`);
+    const chart = document.querySelector(this.searchableSelector) as HTMLElement;
+    const query = chart.getAttribute('data-query');
+    const title = chart.getAttribute('data-title');
+    if (query && title) {
+      this.store.addSearch(query, title);
+    } else {
+      console.warn(`Could not add current search: no query or title found on element ${this.searchableSelector}`);
+    }
+  }
+
   private getDialog = () => this.querySelector('dialog') as HTMLDialogElement;
 
   render() {
     return html`
       <dialog class="modal backdrop:backdrop-blur-sm">
-        <div class="modal-box">
+        <div class="modal-box flex flex-col gap-4">
           <form method="dialog">
             <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
@@ -56,6 +71,10 @@ export class SavedSearchDialog extends LitElement {
                 `)}
               </ul>
             `}
+          
+          <div>
+            <button class="btn btn-primary" @click=${() => this.addCurrentSearch() }>Add current search</button>
+          </div>
         </div>
         
         <!-- Covers the background, so click on background closes -->

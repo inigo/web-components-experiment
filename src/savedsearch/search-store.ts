@@ -19,14 +19,6 @@ export class SearchStore {
         }
     }
 
-    // @todo Remove this once there's an actual way to add searches
-    setupDefaultSearches() {
-        if (this.searches.length === 0) {
-            this.addSearch('All', '?something');
-            this.addSearch('My files', '?other');
-        }
-    }
-
     private saveToStorage() {
         localStorage.setItem(this.storageKey, JSON.stringify(this.searches));
     }
