@@ -53,7 +53,7 @@
 </footer>
 
 <main class="flex flex-col gap-2 p-4 grid-area-main">
-    <div class="flex flex-row justify-end gap-2">
+    <div class="buttons flex gap-4">
         <sl-tooltip content="Show navigation">
             <button class="btn btn-outline btn-info show-if-collapse-nav mr-auto" data-action="removeClass" data-class="collapse-nav" data-target="body"
                     aria-label="Show navigation">
@@ -61,7 +61,9 @@
             </button>
         </sl-tooltip>
 
-        <button hx-get="/api/data" hx-trigger="click" hx-target="#result" class="btn btn-primary">
+        <button class="btn btn-primary btn-outline" data-action="showDialog" data-modal="true" data-target="#savedSearchDialog">Saved searches</button>
+
+        <button hx-get="/api/data" hx-trigger="click" hx-target="#result" class="btn btn-primary btn-outline">
             Load Data
         </button>
     </div>
@@ -267,6 +269,38 @@
     </p>
 
 </main>
+
+<dialog id="savedSearchDialog" class="modal backdrop:backdrop-blur-sm">
+    <div class="modal-box">
+        <form method="dialog">
+            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+        </form>
+
+        <h2 class="font-bold mb-2">Saved searches</h2>
+        <ul class="list-disc list-outside ml-4">
+            <li>
+                <div class="flex justify-between items-center">
+                    <span>Search 1</span>
+                    <sl-icon-button name="trash3"></sl-icon-button>
+                </div>
+            </li>
+            <li>
+                <div class="flex justify-between items-center">
+                    <span>Search 2</span>
+                    <sl-icon-button name="trash3"></sl-icon-button>
+                </div>
+            </li>
+            <li>
+                <div class="flex justify-between items-center">
+                    <span>Search 3</span>
+                    <sl-icon-button name="trash3"></sl-icon-button>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <!-- Covers the background, so click on background closes -->
+    <form method="dialog" class="modal-backdrop"><button>Close</button></form>
+</dialog>
 
 <script type="module" src="/src/main.ts"></script>
 </body>
