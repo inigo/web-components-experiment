@@ -46,7 +46,7 @@ function handleAction(el: HTMLElement) {
                 classList.forEach(cls => target.classList.remove(cls));
             }
         } else if (action === 'showDialog') {
-            console.log(`Showing dialog ${target.outerHTML}`);
+            console.log(`Showing dialog ${target.id}`);
             const isModal = el.hasAttribute('data-modal') && el.getAttribute('data-modal')==="true";
             // Could be a <dialog>, or a web component with the same show/showModal functions
             isModal ? (target as any).showModal() : (target as any).show();
