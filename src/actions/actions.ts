@@ -47,9 +47,13 @@ function handleAction(el: HTMLElement) {
             }
         } else if (action === 'showDialog') {
             console.log(`Showing dialog ${target.outerHTML}`);
-            const dialog = target as HTMLDialogElement;
             const isModal = el.hasAttribute('data-modal') && el.getAttribute('data-modal')==="true";
-            isModal ? dialog.showModal() : dialog.show();
+            
+            if (target instanceof HTMLDialogElement) {
+                isModal ? target.showModal() : target.show();
+            } else if (target.tagName.toLowerCase() === 'saved-search-dialog') {
+                isModal ? (target as any).showModal() : (target as any).show();
+            }
         }
     });
 }

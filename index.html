@@ -237,37 +237,7 @@
 
 </main>
 
-<dialog id="savedSearchDialog" class="modal backdrop:backdrop-blur-sm">
-    <div class="modal-box">
-        <form method="dialog">
-            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-        </form>
-
-        <h2 class="font-bold mb-2">Saved searches</h2>
-        <ul class="list-disc list-outside ml-4">
-            <li>
-                <div class="flex justify-between items-center">
-                    <span>Search 1</span>
-                    <sl-icon-button name="trash3"></sl-icon-button>
-                </div>
-            </li>
-            <li>
-                <div class="flex justify-between items-center">
-                    <span>Search 2</span>
-                    <sl-icon-button name="trash3"></sl-icon-button>
-                </div>
-            </li>
-            <li>
-                <div class="flex justify-between items-center">
-                    <span>Search 3</span>
-                    <sl-icon-button name="trash3"></sl-icon-button>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <!-- Covers the background, so click on background closes -->
-    <form method="dialog" class="modal-backdrop"><button>Close</button></form>
-</dialog>
+<saved-search-dialog id="savedSearchDialog"></saved-search-dialog>
 
 <script type="module" src="/src/main.ts"></script>
 </body>

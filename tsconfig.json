@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "useDefineForClassFields": true,
+    /* Changed to false to help Lit */
+    "useDefineForClassFields": false,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+
+    /* Needed for Lit, used by the saved search web component */
+    "experimentalDecorators": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
