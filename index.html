@@ -79,7 +79,9 @@
         </button>
     </div>
 
-    <data-chart id="chart" data-query="anotherQuery" data-title="anotherTitle">
+    <!-- The max width forces the content to resize smaller when the browser gets smaller - otherwise the graph
+         grows when the browser grows, and never shrinks because the container is now sized to the larger graph -->
+    <data-chart id="chart" data-query="anotherQuery" data-title="anotherTitle" class="max-w-[min(calc(100vw-300px),60rem)] min-w-120">
 
     </data-chart>
 
