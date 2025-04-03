@@ -16,6 +16,8 @@ import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog';
 import "./chart/chart.ts";
+import {DataChart} from "./chart/chart.ts";
+import {SlSelectEvent} from "@shoelace-style/shoelace";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
@@ -24,3 +26,11 @@ initCookieConsent();
 setupCssActions();
 initSelectors();
 
+const chart = document.querySelector('#chart') as DataChart;
+const chartHolder = document.querySelector('#chartHolder') !;
+// @todo Maybe this setup should be in chart itself, in connectedCallback?
+chartHolder.addEventListener('sl-select', (event: Event) => {
+    const selectedChartType = (event as SlSelectEvent).detail.item.value;
+    console.debug(`Changed chart type to ${selectedChartType}`);
+    chart.chartType = selectedChartType;
+});

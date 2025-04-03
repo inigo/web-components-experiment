@@ -52,7 +52,7 @@
     See the fine privacy policy
 </footer>
 
-<main class="flex flex-col gap-2 p-4 grid-area-main">
+<main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
     <div class="buttons flex gap-8">
         <sl-tooltip content="Show navigation">
             <button class="btn btn-outline btn-info show-if-collapse-nav mr-auto" data-action="removeClass" data-class="collapse-nav" data-target="body"
@@ -61,14 +61,14 @@
             </button>
         </sl-tooltip>
 
-        <sl-dropdown class="border-primary" distance="2">
+        <sl-dropdown id="chartTypeSelector" class="border-primary" distance="2">
             <button class="btn btn-primary btn-outline" slot="trigger">Chart type
                 <sl-icon name="caret-down"></sl-icon>
             </button>
             <sl-menu>
-                <sl-menu-item>Column <sl-icon slot="prefix" src="/column-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
-                <sl-menu-item>Bar <sl-icon slot="prefix" src="/bar-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
-                <sl-menu-item>Line <sl-icon slot="prefix" src="/line-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item value="column">Column <sl-icon slot="prefix" src="/column-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item value="bar">Bar <sl-icon slot="prefix" src="/bar-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
+                <sl-menu-item value="line">Line <sl-icon slot="prefix" src="/line-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
             </sl-menu>
         </sl-dropdown>
 

@@ -2,11 +2,15 @@ import Highcharts, {SeriesOptionsType} from "highcharts";
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ChartData, DataStore, defaultDataStore} from "./chart-data.ts";
+import {PropertyValues} from "@lit/reactive-element";
 
 @customElement('data-chart')
 export class DataChart extends LitElement {
     @property({ type: DataStore })
     store: DataStore = defaultDataStore;
+
+    @property()
+    chartType: string = 'column';
 
     private unsubscribe = () => {};
     private chart: Highcharts.Chart | null = null;
@@ -33,6 +37,11 @@ export class DataChart extends LitElement {
         return html`<div id="shadow-chart"></div>`;
     }
 
+    update(changedProperties: PropertyValues) {
+        super.update(changedProperties);
+        this.updateChartData();
+    }
+
     firstUpdated() {
         const chartElement = this.shadowRoot?.getElementById('shadow-chart');
         if (chartElement) {
@@ -40,7 +49,7 @@ export class DataChart extends LitElement {
             this.chart = Highcharts.chart(chartElement, {
                 credits: {enabled: false},
                 chart: {
-                    type: 'column',
+                    type: this.chartType,
                 },
                 title: {
                     text: data?.title ?? '',
@@ -68,6 +77,9 @@ export class DataChart extends LitElement {
                         animation: {
                             duration: 400,
                         },
+                    },
+                    line: {
+                        marker: { symbol: 'circle' },
                     }
                 },
                 series: (data?.series ?? []) as SeriesOptionsType[],
@@ -76,29 +88,28 @@ export class DataChart extends LitElement {
     }
 
     private updateChartData() {
+        console.debug("Updating chart data");
         const data = this.store.getData();
 
         if (!this.chart || !data) return;
 
-        this.chart.setTitle({ text: data.title });
-        this.chart.xAxis[0].setCategories(data.categories);
+        const chart = this.chart;
+        
+        chart.setTitle({ text: data.title });
+        chart.xAxis[0].setCategories(data.categories);
+
+        // Remove the data before changing the chart type - or axis values get confused
+        chart.series.slice().forEach((series) => series.remove(false));
 
         // Update series data
-        data.series.forEach((seriesData, index) => {
-            if (this.chart?.series[index]) {
-                this.chart.series[index].setData(seriesData.data, false);
-            } else if (this.chart) {
-                this.chart.addSeries(seriesData as SeriesOptionsType, false);
-            }
+        data.series.forEach((seriesData) => {
+            chart.addSeries(seriesData as SeriesOptionsType, false);
         });
-        // Remove unused series
-        while (this.chart.series.length > data.series.length) {
-            if (this.chart.series[this.chart.series.length - 1]) {
-                this.chart.series[this.chart.series.length - 1].remove(false);
-            }
-        }
+
+        // @ts-ignore
+        chart.series.forEach(s => s.update({ 'type': this.chartType }));
 
         // Redraw chart once with all changes
-        this.chart.redraw();
+        chart.redraw();
     }
 }
