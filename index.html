@@ -54,7 +54,7 @@
 
 <main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
     <!-- Listens for events from a selector with purpose chartType, and converts them for the chart component -->
-    <data-event-mediator chartTypePurpose="chartType"></data-event-mediator>
+    <data-event-mediator chartTypePurpose="chartType" chartTypeEvent="change"></data-event-mediator>
 
     <div class="buttons flex gap-8">
         <sl-tooltip content="Show navigation">
@@ -64,7 +64,16 @@
             </button>
         </sl-tooltip>
 
-        <sl-dropdown id="chartTypeSelector" data-purpose="chartType" class="border-primary" distance="2">
+        <div class="flex flex-row items-center gap-2">
+            <label for="chartTypeSelector" class="whitespace-nowrap font-bold">Chart type</label>
+            <select id="chartTypeSelector" data-purpose="chartType" class="select border-primary focus:outline-none bg-transparent text-primary font-semibold">
+                <option value="column">Column</option>
+                <option value="bar">Bar</option>
+                <option value="line">Line</option>
+            </select>
+        </div>
+
+        <sl-dropdown data-purpose="chartType" class="border-primary" distance="2">
             <button class="btn btn-primary btn-outline" slot="trigger">Chart type
                 <sl-icon name="caret-down"></sl-icon>
             </button>

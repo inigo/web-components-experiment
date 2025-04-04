@@ -6,34 +6,37 @@ import {SlSelectEvent} from "@shoelace-style/shoelace";
  */
 export class DataEventMediator extends HTMLElement {
     private chartTypePurpose: string = 'chartType';
+    private chartTypeEvent: string = 'sl-select';
 
     private chartTypeMediator = (event: Event) => {
-        const selectEvent = (event as SlSelectEvent);
-
-        const purpose = ((selectEvent.target as HTMLElement)
+        const purpose = ((event.target as HTMLElement)
             .closest("[data-purpose]") as HTMLElement)
             ?.dataset.purpose;
-        const selectedItem = selectEvent.detail.item.value;
-
         if (purpose === this.chartTypePurpose) {
+            const selectedItem =
+                (event as SlSelectEvent).detail?.item?.value ??
+                (event.target as HTMLSelectElement).value;
+
             console.debug(`Raised new chart type changed event with value '${selectedItem}'`);
-            const event: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
+            const newEvent: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
                 bubbles: true,
                 detail: { chartType: selectedItem }
             });
-            document.dispatchEvent(event);
+            document.dispatchEvent(newEvent);
         }
     };
 
     // noinspection JSUnusedGlobalSymbols
     connectedCallback() {
         this.chartTypePurpose = this.getAttribute('chartTypePurpose') ?? this.chartTypePurpose;
-        document.addEventListener('sl-select', this.chartTypeMediator);
+        this.chartTypeEvent = this.getAttribute('chartTypeEvent') ?? this.chartTypeEvent;
+
+        document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
     }
 
     // noinspection JSUnusedGlobalSymbols
     disconnectedCallback() {
-        document.removeEventListener('sl-select', this.chartTypeMediator);
+        document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
     }
 }
 
