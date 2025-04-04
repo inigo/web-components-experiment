@@ -54,6 +54,6 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
     }
 
     disconnectedCallback() {
-        document.removeEventListener('hashchange', this.handleHashChange);
+        window.removeEventListener('hashchange', this.handleHashChange);
     }
 }
