@@ -27,6 +27,8 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
         const hash = window.location.hash.substring(1);
         const params = this.parseHashParams(hash);
 
+        // Could avoid this coupling to the select element by creating a custom
+        // data-hash-changed element, and wrapping the select element with it
         if (params.chartType) {
             const el = document.querySelector(`[data-purpose="chartType"]`);
             const selectElement = el as HTMLSelectElement;
