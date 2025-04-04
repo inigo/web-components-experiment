@@ -1,12 +1,13 @@
 import {SlSelectEvent} from "@shoelace-style/shoelace";
+import {WebComponentElement} from "./web-component-interface.ts";
 
 /**
  * Decouples the chart component from the components changing its values, by
  * converting and re-raises the relevant events.
  */
-export class DataEventMediator extends HTMLElement {
+export class DataEventMediator extends HTMLElement implements WebComponentElement {
     private chartTypeEvent: string = 'sl-select';
-    private historyManager = new HistoryManager();
+    private historyManager? : DataHistoryManager;
 
     private chartTypeMediator = (event: Event) => {
         const purpose = ((event.target as HTMLElement)
@@ -17,7 +18,9 @@ export class DataEventMediator extends HTMLElement {
                 (event as SlSelectEvent).detail?.item?.value ??
                 (event.target as HTMLSelectElement).value;
 
-            this.historyManager.updateHash({chartType: selectedItem});
+            if (this.historyManager) {
+                this.historyManager.updateHash({chartType: selectedItem});
+            }
 
             console.debug(`Raised new chart type changed event with value '${selectedItem}'`);
             const newEvent: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
@@ -28,23 +31,23 @@ export class DataEventMediator extends HTMLElement {
         }
     };
 
-    // noinspection JSUnusedGlobalSymbols
     connectedCallback() {
         this.chartTypeEvent = this.getAttribute('chartTypeEvent') ?? this.chartTypeEvent;
+        this.historyManager = this.querySelector('data-history-manager') as DataHistoryManager;
 
         document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
-        window.addEventListener('hashchange', this.historyManager.handleHashChange);
-        requestAnimationFrame(() => this.historyManager.handleHashChange());
     }
 
-    // noinspection JSUnusedGlobalSymbols
     disconnectedCallback() {
         document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
-        document.removeEventListener('hashchange', this.historyManager.handleHashChange);
     }
 }
 
-class HistoryManager {
+/**
+ * Keep the browser history aligned with the current state of the data chart, by
+ * reading and updating the URL hash.
+ */
+class DataHistoryManager extends HTMLElement implements WebComponentElement {
 
     /** Update the hash if it has changed, adding to the browser history */
     updateHash(newValues: Record<string, string>): void {
@@ -86,13 +89,26 @@ class HistoryManager {
         return result;
     }
 
+    connectedCallback() {
+        window.addEventListener('hashchange', this.handleHashChange);
+        requestAnimationFrame(() => this.handleHashChange());
+    }
+
+    disconnectedCallback() {
+        document.removeEventListener('hashchange', this.handleHashChange);
+    }
+
 }
 
 
 export type DataChartTypeChangedEvent = CustomEvent<{ chartType: string }>;
 
-export function registerDataEventMediator(): void {
+
+export function registerComponents(): void {
     if (!customElements.get('data-event-mediator')) {
         customElements.define('data-event-mediator', DataEventMediator);
+    }
+    if (!customElements.get('data-history-manager')) {
+        customElements.define('data-history-manager', DataHistoryManager);
     }
 }

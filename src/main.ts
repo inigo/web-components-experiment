@@ -16,7 +16,7 @@ import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog';
 import "./chart/chart.ts";
-import {registerDataEventMediator} from "./chart/chart-events.ts";
+import {registerComponents} from "./chart/chart-events.ts";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
@@ -24,4 +24,4 @@ setBasePath(isDev ? '/dist/' : '.');
 initCookieConsent();
 setupCssActions();
 initSelectors();
-registerDataEventMediator();
+registerComponents();
