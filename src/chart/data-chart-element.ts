@@ -1,9 +1,9 @@
 import Highcharts, {SeriesOptionsType} from "highcharts";
 import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {ChartData, DataStore, defaultDataStore} from "./chart-data.ts";
+import {ChartData, DataStore, defaultDataStore} from "./datastore.ts";
 import {PropertyValues} from "@lit/reactive-element";
-import {DataChartTypeChangedEvent} from "./data-event-mediator.ts";
+import {DataChartTypeChangedEvent} from "./data-event-mediator-element.ts";
 
 /**
  * Data visualization chart, powered by Highcharts.

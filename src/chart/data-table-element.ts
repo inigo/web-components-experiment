@@ -1,6 +1,6 @@
 import {customElement, property} from "lit/decorators.js";
 import {html, LitElement} from "lit";
-import {ChartData, DataStore, defaultDataStore} from "./chart-data.ts";
+import {ChartData, DataStore, defaultDataStore} from "./datastore.ts";
 
 
 @customElement('data-table')

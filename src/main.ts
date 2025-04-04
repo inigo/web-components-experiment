@@ -14,9 +14,9 @@ import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js'
 import {setupCssActions} from "./actions/actions.ts";
 import {initSelectors} from "./select/select.ts";
 
-import './savedsearch/saved-search-dialog';
-import "./chart/chart.ts";
-import "./chart/data-table.ts";
+import './savedsearch/saved-search-dialog-element.ts';
+import "./chart/data-chart-element.ts";
+import "./chart/data-table-element.ts";
 import {registerComponents} from "./chart/register-components.ts";
 
 const isDev = import.meta.env.DEV;

@@ -1,6 +1,6 @@
 import {SlSelectEvent} from "@shoelace-style/shoelace";
 import {WebComponentElement} from "./web-component-interface.ts";
-import {DataHistoryManager} from "./data-history-manager.ts";
+import {DataHistoryManager} from "./data-history-manager-element.ts";
 
 /**
  * Decouples the chart component from the components changing its values, by

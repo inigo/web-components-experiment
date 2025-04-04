@@ -1,6 +1,6 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {defaultSearchStore, SavedSearch, SearchStore} from "./search-store.ts";
+import {defaultSearchStore, SavedSearch, SearchStore} from "./searchstore.ts";
 
 @customElement('saved-search-dialog')
 export class SavedSearchDialog extends LitElement {

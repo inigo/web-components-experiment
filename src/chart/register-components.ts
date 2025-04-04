@@ -1,5 +1,5 @@
-import {DataHistoryManager} from "./data-history-manager.ts";
-import {DataEventMediator} from "./data-event-mediator.ts";
+import {DataHistoryManager} from "./data-history-manager-element.ts";
+import {DataEventMediator} from "./data-event-mediator-element.ts";
 
 export function registerComponents(): void {
     if (!customElements.get('data-event-mediator')) {
