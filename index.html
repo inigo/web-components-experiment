@@ -31,7 +31,8 @@
 
         <div class="flex flex-col gap-4">
 
-            <select id="select-state" class="slct" name="state[]" multiple placeholder="Select a state..." autocomplete="off">
+            <label for="select-state" class="sr-only">State</label>
+            <select id="select-state" class="slct" name="state[]" multiple autocomplete="off">
                 <option value="">Select a state...</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -42,7 +43,8 @@
                 <option value="WY" selected>Wyoming</option>
             </select>
 
-            <select id="select-cheese" class="slct" name="cheese[]" multiple placeholder="Select a cheese..." autocomplete="off">
+            <label for="select-cheese" class="sr-only">Cheese</label>
+            <select id="select-cheese" class="slct" name="cheese[]" multiple autocomplete="off">
                 <option value="">Select a cheese...</option>
                 <option value="AL">Brie</option>
                 <option value="AK">Cheddar</option>
