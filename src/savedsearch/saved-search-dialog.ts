@@ -35,11 +35,12 @@ export class SavedSearchDialog extends LitElement {
 
   private addCurrentSearch() {
     console.debug(`Adding current search from element ${this.searchableSelector}`);
-    const chart = document.querySelector(this.searchableSelector) as HTMLElement;
-    const query = chart.getAttribute('data-query');
-    const title = chart.getAttribute('data-title');
+    // @todo Work out the best place to get this info - particularly the title
+    // const chart = document.querySelector(this.searchableSelector) as HTMLElement;
+    const query = window.location.hash;
+    const title =  query; // chart.getAttribute('data-title');
     if (query && title) {
-      this.store.addSearch(query, title);
+      this.store.addSearch(title, query);
     } else {
       console.warn(`Could not add current search: no query or title found on element ${this.searchableSelector}`);
     }
