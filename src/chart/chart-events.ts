@@ -1,0 +1,1 @@
+export type DataChartTypeChangedEvent = CustomEvent<{ chartType: string }>;

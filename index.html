@@ -53,6 +53,11 @@
 </footer>
 
 <main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
+    <!-- @todo Use this to set up the event mediation -->
+    <data-event-mediator>
+
+    </data-event-mediator>
+
     <div class="buttons flex gap-8">
         <sl-tooltip content="Show navigation">
             <button class="btn btn-outline btn-info show-if-collapse-nav mr-auto" data-action="removeClass" data-class="collapse-nav" data-target="body"
@@ -61,7 +66,7 @@
             </button>
         </sl-tooltip>
 
-        <sl-dropdown id="chartTypeSelector" class="border-primary" distance="2">
+        <sl-dropdown id="chartTypeSelector" data-purpose="chartType" class="border-primary" distance="2">
             <button class="btn btn-primary btn-outline" slot="trigger">Chart type
                 <sl-icon name="caret-down"></sl-icon>
             </button>

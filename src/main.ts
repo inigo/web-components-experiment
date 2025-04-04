@@ -16,8 +16,8 @@ import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog';
 import "./chart/chart.ts";
-import {DataChart} from "./chart/chart.ts";
 import {SlSelectEvent} from "@shoelace-style/shoelace";
+import {DataChartTypeChangedEvent} from "./chart/chart-events.ts";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
@@ -26,11 +26,23 @@ initCookieConsent();
 setupCssActions();
 initSelectors();
 
-const chart = document.querySelector('#chart') as DataChart;
-const chartHolder = document.querySelector('#chartHolder') !;
-// @todo Maybe this setup should be in chart itself, in connectedCallback?
-chartHolder.addEventListener('sl-select', (event: Event) => {
-    const selectedChartType = (event as SlSelectEvent).detail.item.value;
-    console.debug(`Changed chart type to ${selectedChartType}`);
-    chart.chartType = selectedChartType;
-});
+// @todo Move this to the data-event-mediator
+document.addEventListener('sl-select', (event: Event) => {
+    const selectEvent = (event as SlSelectEvent);
+
+    const purpose = ((selectEvent.target as HTMLElement)
+        .closest("[data-purpose]") as HTMLElement)
+        .dataset.purpose;
+    const selectedItem = selectEvent.detail.item.value;
+
+    if (purpose==="chartType") {
+        console.debug(`Launched new event`);
+
+        const event: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
+            bubbles: true,
+            detail: { chartType: selectedItem }
+        });
+        document.dispatchEvent(event);
+    }
+})
+

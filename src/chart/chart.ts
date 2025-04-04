@@ -3,7 +3,13 @@ import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ChartData, DataStore, defaultDataStore} from "./chart-data.ts";
 import {PropertyValues} from "@lit/reactive-element";
+import {DataChartTypeChangedEvent} from "./chart-events.ts";
 
+/**
+ * Data visualization chart, powered by Highcharts.
+ *
+ * @listens {CustomEvent} data-chartType-changed - Change chart type e.g. to column, bar, line
+ */
 @customElement('data-chart')
 export class DataChart extends LitElement {
     @property({ type: DataStore })
@@ -21,15 +27,24 @@ export class DataChart extends LitElement {
             console.log("Received callback with chart data");
             this.updateChartData();
         });
+        document.addEventListener('data-chartType-changed', this.handleChartTypeChanged);
     }
 
     disconnectedCallback() {
         super.disconnectedCallback();
         this.unsubscribe();
+        document.removeEventListener('data-chartType-changed', this.handleChartTypeChanged);
         if (this.chart) {
             this.chart.destroy();
             this.chart = null;
         }
+    }
+
+    private handleChartTypeChanged = (event: Event) => {
+        const dataEvent = event as DataChartTypeChangedEvent;
+        const selectedChartType = dataEvent.detail.chartType;
+        console.debug(`Changed chart type to ${selectedChartType}`);
+        this.chartType = selectedChartType;
     }
 
     render() {
@@ -38,6 +53,7 @@ export class DataChart extends LitElement {
     }
 
     update(changedProperties: PropertyValues) {
+        console.debug("Updating chart");
         super.update(changedProperties);
         this.updateChartData();
     }
