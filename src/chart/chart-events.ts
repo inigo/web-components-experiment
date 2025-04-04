@@ -43,7 +43,7 @@ export class DataEventMediator extends HTMLElement {
         }
     }
 
-    handleHashChange = (_: Event) => {
+    handleHashChange = () => {
         const hash = window.location.hash.substring(1);
         const params = this.parseHashParams(hash);
 
@@ -51,6 +51,7 @@ export class DataEventMediator extends HTMLElement {
             const el = document.querySelector(`[data-purpose="${this.chartTypePurpose}"]`);
             const selectElement = el as HTMLSelectElement;
             if (selectElement && selectElement.value !== params.chartType) {
+                console.debug(`Because of hash change, setting chart type to ${params.chartType}`);
                 selectElement.value = params.chartType;
                 selectElement.dispatchEvent(new Event('change', {bubbles: true}));
             }
@@ -74,6 +75,7 @@ export class DataEventMediator extends HTMLElement {
 
         document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
         window.addEventListener('hashchange', this.handleHashChange);
+        requestAnimationFrame(() => this.handleHashChange());
     }
 
     // noinspection JSUnusedGlobalSymbols
