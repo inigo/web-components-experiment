@@ -1,6 +1,7 @@
 import {SlSelectEvent} from "@shoelace-style/shoelace";
 import {WebComponentElement} from "./web-component-interface.ts";
 import {DataHistoryManager} from "./data-history-manager-element.ts";
+import {customElement} from "lit/decorators.js";
 
 /**
  * Decouples the chart component from the components changing its values, by
@@ -9,6 +10,7 @@ import {DataHistoryManager} from "./data-history-manager-element.ts";
  * @listens change - from a select with purpose=chartType (depending on chartTypeEvent)
  * @listens sl-select - from a Shoelace dropdown with purpose=chartType (depending on chartTypeEvent)
  */
+@customElement('data-event-mediator')
 export class DataEventMediator extends HTMLElement implements WebComponentElement {
     private chartTypeEvent: string = 'sl-select';
     private historyManager? : DataHistoryManager;

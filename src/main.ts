@@ -15,9 +15,7 @@ import {setupCssActions} from "./actions/actions.ts";
 import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog-element.ts';
-import "./chart/data-chart-element.ts";
-import "./chart/data-table-element.ts";
-import {registerComponents} from "./chart/register-components.ts";
+import {registerDataChartComponents} from "./chart/register-components.ts";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
@@ -25,4 +23,4 @@ setBasePath(isDev ? '/dist/' : '.');
 initCookieConsent();
 setupCssActions();
 initSelectors();
-registerComponents();
+registerDataChartComponents();

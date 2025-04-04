@@ -1,4 +1,5 @@
 import {WebComponentElement} from "./web-component-interface.ts";
+import {customElement} from "lit/decorators.js";
 
 /**
  * Keep the browser history aligned with the current state of the data chart, by
@@ -6,6 +7,7 @@ import {WebComponentElement} from "./web-component-interface.ts";
  *
  * @listens hashchange
  */
+@customElement('data-history-manager')
 export class DataHistoryManager extends HTMLElement implements WebComponentElement {
 
     /** Update the hash if it has changed, adding to the browser history */
