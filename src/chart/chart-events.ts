@@ -5,19 +5,19 @@ import {SlSelectEvent} from "@shoelace-style/shoelace";
  * converting and re-raises the relevant events.
  */
 export class DataEventMediator extends HTMLElement {
-    private chartTypePurpose: string = 'chartType';
     private chartTypeEvent: string = 'sl-select';
+    private historyManager = new HistoryManager();
 
     private chartTypeMediator = (event: Event) => {
         const purpose = ((event.target as HTMLElement)
             .closest("[data-purpose]") as HTMLElement)
             ?.dataset.purpose;
-        if (purpose === this.chartTypePurpose) {
+        if (purpose === "chartType") {
             const selectedItem =
                 (event as SlSelectEvent).detail?.item?.value ??
                 (event.target as HTMLSelectElement).value;
 
-            this.updateHash({chartType: selectedItem});
+            this.historyManager.updateHash({chartType: selectedItem});
 
             console.debug(`Raised new chart type changed event with value '${selectedItem}'`);
             const newEvent: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
@@ -28,8 +28,26 @@ export class DataEventMediator extends HTMLElement {
         }
     };
 
+    // noinspection JSUnusedGlobalSymbols
+    connectedCallback() {
+        this.chartTypeEvent = this.getAttribute('chartTypeEvent') ?? this.chartTypeEvent;
+
+        document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
+        window.addEventListener('hashchange', this.historyManager.handleHashChange);
+        requestAnimationFrame(() => this.historyManager.handleHashChange());
+    }
+
+    // noinspection JSUnusedGlobalSymbols
+    disconnectedCallback() {
+        document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
+        document.removeEventListener('hashchange', this.historyManager.handleHashChange);
+    }
+}
+
+class HistoryManager {
+
     /** Update the hash if it has changed, adding to the browser history */
-    private updateHash(newValues: Record<string, string>): void {
+    updateHash(newValues: Record<string, string>): void {
         const hash = new URLSearchParams(window.location.hash.slice(1));
         hash.sort();
         const originalHashString = hash.toString();
@@ -48,7 +66,7 @@ export class DataEventMediator extends HTMLElement {
         const params = this.parseHashParams(hash);
 
         if (params.chartType) {
-            const el = document.querySelector(`[data-purpose="${this.chartTypePurpose}"]`);
+            const el = document.querySelector(`[data-purpose="chartType"]`);
             const selectElement = el as HTMLSelectElement;
             if (selectElement && selectElement.value !== params.chartType) {
                 console.debug(`Because of hash change, setting chart type to ${params.chartType}`);
@@ -68,22 +86,8 @@ export class DataEventMediator extends HTMLElement {
         return result;
     }
 
-    // noinspection JSUnusedGlobalSymbols
-    connectedCallback() {
-        this.chartTypePurpose = this.getAttribute('chartTypePurpose') ?? this.chartTypePurpose;
-        this.chartTypeEvent = this.getAttribute('chartTypeEvent') ?? this.chartTypeEvent;
-
-        document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
-        window.addEventListener('hashchange', this.handleHashChange);
-        requestAnimationFrame(() => this.handleHashChange());
-    }
-
-    // noinspection JSUnusedGlobalSymbols
-    disconnectedCallback() {
-        document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
-        document.removeEventListener('hashchange', this.handleHashChange);
-    }
 }
+
 
 export type DataChartTypeChangedEvent = CustomEvent<{ chartType: string }>;
 
