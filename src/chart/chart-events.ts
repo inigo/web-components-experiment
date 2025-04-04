@@ -43,17 +43,43 @@ export class DataEventMediator extends HTMLElement {
         }
     }
 
+    handleHashChange = (_: Event) => {
+        const hash = window.location.hash.substring(1);
+        const params = this.parseHashParams(hash);
+
+        if (params.chartType) {
+            const el = document.querySelector(`[data-purpose="${this.chartTypePurpose}"]`);
+            const selectElement = el as HTMLSelectElement;
+            if (selectElement && selectElement.value !== params.chartType) {
+                selectElement.value = params.chartType;
+                selectElement.dispatchEvent(new Event('change', {bubbles: true}));
+            }
+        }
+    }
+
+    private parseHashParams(hash: string): Record<string, string> {
+        if (!hash) return {};
+
+        const searchParams = new URLSearchParams(hash);
+        const result: Record<string, string> = {};
+        searchParams.forEach((value, key) => result[key] = value );
+
+        return result;
+    }
+
     // noinspection JSUnusedGlobalSymbols
     connectedCallback() {
         this.chartTypePurpose = this.getAttribute('chartTypePurpose') ?? this.chartTypePurpose;
         this.chartTypeEvent = this.getAttribute('chartTypeEvent') ?? this.chartTypeEvent;
 
         document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
+        window.addEventListener('hashchange', this.handleHashChange);
     }
 
     // noinspection JSUnusedGlobalSymbols
     disconnectedCallback() {
         document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
+        document.removeEventListener('hashchange', this.handleHashChange);
     }
 }
 
