@@ -3,7 +3,7 @@ import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ChartData, DataStore, defaultDataStore} from "./chart-data.ts";
 import {PropertyValues} from "@lit/reactive-element";
-import {DataChartTypeChangedEvent} from "./chart-events.ts";
+import {DataChartTypeChangedEvent} from "./data-event-mediator.ts";
 
 /**
  * Data visualization chart, powered by Highcharts.
@@ -21,25 +21,6 @@ export class DataChart extends LitElement {
     private unsubscribe = () => {};
     private chart: Highcharts.Chart | null = null;
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.unsubscribe = this.store.subscribe((_: ChartData) => {
-            console.log("Received callback with chart data");
-            this.updateChartData();
-        });
-        document.addEventListener('data-chartType-changed', this.handleChartTypeChanged);
-    }
-
-    disconnectedCallback() {
-        super.disconnectedCallback();
-        this.unsubscribe();
-        document.removeEventListener('data-chartType-changed', this.handleChartTypeChanged);
-        if (this.chart) {
-            this.chart.destroy();
-            this.chart = null;
-        }
-    }
-
     private handleChartTypeChanged = (event: Event) => {
         const dataEvent = event as DataChartTypeChangedEvent;
         const selectedChartType = dataEvent.detail.chartType;
@@ -48,7 +29,7 @@ export class DataChart extends LitElement {
     }
 
     render() {
-        console.log("Rendering chart");
+        console.debug("Rendering chart");
         return html`<div id="shadow-chart"></div>`;
     }
 
@@ -128,4 +109,24 @@ export class DataChart extends LitElement {
         // Redraw chart once with all changes
         chart.redraw();
     }
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.unsubscribe = this.store.subscribe((_: ChartData) => {
+            console.log("Received callback with chart data");
+            this.updateChartData();
+        });
+        document.addEventListener('data-chartType-changed', this.handleChartTypeChanged);
+    }
+
+    disconnectedCallback() {
+        super.disconnectedCallback();
+        this.unsubscribe();
+        document.removeEventListener('data-chartType-changed', this.handleChartTypeChanged);
+        if (this.chart) {
+            this.chart.destroy();
+            this.chart = null;
+        }
+    }
+
 }

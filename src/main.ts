@@ -16,7 +16,7 @@ import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog';
 import "./chart/chart.ts";
-import {registerComponents} from "./chart/chart-events.ts";
+import {registerComponents} from "./chart/register-components.ts";
 
 const isDev = import.meta.env.DEV;
 setBasePath(isDev ? '/dist/' : '.');
