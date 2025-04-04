@@ -16,6 +16,7 @@ import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog';
 import "./chart/chart.ts";
+import "./chart/data-table.ts";
 import {registerComponents} from "./chart/register-components.ts";
 
 const isDev = import.meta.env.DEV;
