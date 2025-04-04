@@ -17,6 +17,8 @@ export class DataEventMediator extends HTMLElement {
                 (event as SlSelectEvent).detail?.item?.value ??
                 (event.target as HTMLSelectElement).value;
 
+            this.updateHash({chartType: selectedItem});
+
             console.debug(`Raised new chart type changed event with value '${selectedItem}'`);
             const newEvent: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
                 bubbles: true,
@@ -25,6 +27,21 @@ export class DataEventMediator extends HTMLElement {
             document.dispatchEvent(newEvent);
         }
     };
+
+    /** Update the hash if it has changed, adding to the browser history */
+    private updateHash(newValues: Record<string, string>): void {
+        const hash = new URLSearchParams(window.location.hash.slice(1));
+        hash.sort();
+        const originalHashString = hash.toString();
+
+        Object.entries(newValues).forEach(([key, value]) => hash.set(key, value));
+        hash.sort();
+
+        console.debug(`New hash is ${hash} compared to original ${originalHashString}`);
+        if (hash.toString() !== originalHashString) {
+            history.pushState(null, '', `#${hash}`);
+        }
+    }
 
     // noinspection JSUnusedGlobalSymbols
     connectedCallback() {
