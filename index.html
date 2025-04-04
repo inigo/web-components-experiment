@@ -53,8 +53,8 @@
 </footer>
 
 <main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
-    <data-event-mediator>
-    </data-event-mediator>
+    <!-- Listens for events from a selector with purpose chartType, and converts them for the chart component -->
+    <data-event-mediator chartTypePurpose="chartType"></data-event-mediator>
 
     <div class="buttons flex gap-8">
         <sl-tooltip content="Show navigation">
