@@ -32,7 +32,11 @@
         <div class="flex flex-col gap-4">
 
             <label for="select-state" class="sr-only">State</label>
-            <sl-select id="select-state" size="small" clearable class="" name="state" max-options-visible="999"  placeholder="Select states" multiple>
+            <sl-select id="select-state" size="small" value="AL AK" clearable class="data-select"
+                       name="state" max-options-visible="999"  placeholder="Select states" multiple>
+                <sl-icon slot="expand-icon" name="caret-down-fill" class="text-info"></sl-icon>
+
+                <!-- Values cannot contain spaces -->
                 <sl-option value="AL">Alabama</sl-option>
                 <sl-option value="AK">Alaska</sl-option>
                 <sl-option value="AZ">Arizona</sl-option>

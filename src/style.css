@@ -48,3 +48,13 @@ body.collapse-nav { grid-template-columns: 0 1fr; }
 .collapse-nav .hide-if-collapse-nav { opacity: 0; transition: opacity 10s ease; }
 .show-if-collapse-nav { opacity: 0; pointer-events: none; visibility: hidden; }
 .collapse-nav .show-if-collapse-nav { opacity: 1; transition: opacity 1s ease; pointer-events: auto; visibility: visible; }
+
+@layer components {
+  /** Change the colour of the selects (in shadow DOM) */
+  .data-select::part(tag__base), .data-select::part(tag__remove-button__base) {
+    background-color: var(--color-info);
+    color: var(--color-white);
+  }
+  /** In the select dropdown, change the colours (by default uses color-primary for the first item) */
+  .data-select sl-option::part(base) { background-color: var(--color-white); color: var(--color-black); }
+}
