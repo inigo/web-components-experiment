@@ -28,6 +28,7 @@ export class SavedSearchDialog extends LitElement {
   /** Overriding this to disable the shadow root, so Tailwind classes work */
   createRenderRoot() { return this; }
 
+  // noinspection JSUnusedGlobalSymbols
   show() { this.getDialog().show() }
   // noinspection JSUnusedGlobalSymbols
   showModal() { this.getDialog().showModal() }
