@@ -47,6 +47,9 @@ export class DataChart extends LitElement {
                 credits: {enabled: false},
                 chart: {
                     type: this.chartType,
+                    style: {
+                        fontFamily: 'inherit', // Inherits font family from the containing element
+                    }
                 },
                 title: {
                     text: data?.title ?? '',

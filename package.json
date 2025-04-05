@@ -17,6 +17,7 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "@fontsource/source-sans-3": "^5.2.6",
     "@shoelace-style/shoelace": "^2.20.1",
     "dragula": "^3.7.3",
     "highcharts": "^12.1.2",
