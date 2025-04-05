@@ -27,6 +27,21 @@ export default defineConfig({
         }),
     ],
 
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: {
+                    charts: [
+                        'highcharts',
+                        'highcharts/modules/exporting.js',
+                        'highcharts/modules/accessibility.js',
+                        'highcharts/modules/offline-exporting.js',
+                    ],
+                },
+            },
+        },
+    },
+
     server: {
         proxy: {
             '/api': {
