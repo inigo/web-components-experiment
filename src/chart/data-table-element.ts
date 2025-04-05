@@ -15,7 +15,7 @@ export class DataTable extends LitElement {
         const data = this.store.getData();
         if (!data) return html`<div>No data available</div>`;
         return html`
-            <table class="table">
+            <table class="table tabular-nums">
                 <thead>
                     <th class="bg-gray-200 sticky top-0 z-10"></th>
                     ${data.categories.map(category => html`<th class="bg-gray-200 sticky top-0 z-10">${category}</th>`)}
