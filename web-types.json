@@ -1,0 +1,97 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
+  "name": "simple-html",
+  "version": "0.0.0",
+  "description-markup": "markdown",
+  "contributions": {
+    "html": {
+      "elements": [
+        {
+          "name": "data-chart",
+          "description": "Data visualization chart, powered by Highcharts.\n---\n",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "store",
+              "value": { "type": "DataStore", "default": "defaultDataStore" }
+            },
+            {
+              "name": "chartType",
+              "value": { "type": "string", "default": "'column'" }
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [
+              { "name": "store", "type": "DataStore" },
+              { "name": "chartType", "type": "string" }
+            ],
+            "events": []
+          }
+        },
+        {
+          "name": "data-event-mediator",
+          "description": "Decouples the chart component from the components changing its values, by\nconverting and re-raises the relevant events.\n---\n",
+          "doc-url": "",
+          "attributes": [],
+          "events": [],
+          "js": { "properties": [], "events": [] }
+        },
+        {
+          "name": "data-history-manager",
+          "description": "Keep the browser history aligned with the current state of the data chart, by\nreading and updating the URL hash.\n---\n\n\n### **Methods:**\n - **updateHash(newValues: _Record<string, string>_): _void_** - Update the hash if it has changed, adding to the browser history",
+          "doc-url": "",
+          "attributes": [],
+          "events": [],
+          "js": { "properties": [{ "name": "handleHashChange" }], "events": [] }
+        },
+        {
+          "name": "data-table",
+          "description": "\n---\n",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "store",
+              "value": { "type": "DataStore", "default": "defaultDataStore" }
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [{ "name": "store", "type": "DataStore" }],
+            "events": []
+          }
+        },
+        {
+          "name": "saved-search-dialog",
+          "description": "\n---\n",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "store",
+              "value": {
+                "type": "SearchStore",
+                "default": "defaultSearchStore"
+              }
+            },
+            {
+              "name": "searchable-selector",
+              "value": { "type": "string", "default": "'#searchable'" }
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [
+              { "name": "store", "type": "SearchStore" },
+              { "name": "searchableSelector", "type": "string" }
+            ],
+            "events": []
+          }
+        }
+      ]
+    },
+    "css": {
+      "properties": [],
+      "pseudo-elements": []
+    }
+  }
+}

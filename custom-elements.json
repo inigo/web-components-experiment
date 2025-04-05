@@ -1,0 +1,398 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/chart/data-chart-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Data visualization chart, powered by Highcharts.",
+          "name": "DataChart",
+          "members": [
+            {
+              "kind": "field",
+              "name": "store",
+              "type": {
+                "text": "DataStore"
+              },
+              "default": "defaultDataStore",
+              "attribute": "store"
+            },
+            {
+              "kind": "field",
+              "name": "chartType",
+              "type": {
+                "text": "string"
+              },
+              "default": "'column'",
+              "attribute": "chartType"
+            },
+            {
+              "kind": "field",
+              "name": "unsubscribe",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "chart",
+              "type": {
+                "text": "Highcharts.Chart | null"
+              },
+              "privacy": "private",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "handleChartTypeChanged",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "updateChartData",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "store",
+              "type": {
+                "text": "DataStore"
+              },
+              "default": "defaultDataStore",
+              "fieldName": "store"
+            },
+            {
+              "name": "chartType",
+              "type": {
+                "text": "string"
+              },
+              "default": "'column'",
+              "fieldName": "chartType"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "data-chart",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DataChart",
+          "declaration": {
+            "name": "DataChart",
+            "module": "src/chart/data-chart-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "data-chart",
+          "declaration": {
+            "name": "DataChart",
+            "module": "src/chart/data-chart-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/chart/data-event-mediator-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Decouples the chart component from the components changing its values, by\nconverting and re-raises the relevant events.",
+          "name": "DataEventMediator",
+          "members": [
+            {
+              "kind": "field",
+              "name": "chartTypeEvent",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "'sl-select'"
+            },
+            {
+              "kind": "field",
+              "name": "historyManager",
+              "type": {
+                "text": "DataHistoryManager | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "chartTypeMediator",
+              "privacy": "private"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "data-event-mediator",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DataEventMediator",
+          "declaration": {
+            "name": "DataEventMediator",
+            "module": "src/chart/data-event-mediator-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "data-event-mediator",
+          "declaration": {
+            "name": "DataEventMediator",
+            "module": "src/chart/data-event-mediator-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/chart/data-history-manager-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Keep the browser history aligned with the current state of the data chart, by\nreading and updating the URL hash.",
+          "name": "DataHistoryManager",
+          "members": [
+            {
+              "kind": "method",
+              "name": "updateHash",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "newValues",
+                  "type": {
+                    "text": "Record<string, string>"
+                  }
+                }
+              ],
+              "description": "Update the hash if it has changed, adding to the browser history"
+            },
+            {
+              "kind": "field",
+              "name": "handleHashChange"
+            },
+            {
+              "kind": "method",
+              "name": "parseHashParams",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Record<string, string>"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "hash",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "data-history-manager",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DataHistoryManager",
+          "declaration": {
+            "name": "DataHistoryManager",
+            "module": "src/chart/data-history-manager-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "data-history-manager",
+          "declaration": {
+            "name": "DataHistoryManager",
+            "module": "src/chart/data-history-manager-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/chart/data-table-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DataTable",
+          "members": [
+            {
+              "kind": "field",
+              "name": "store",
+              "type": {
+                "text": "DataStore"
+              },
+              "default": "defaultDataStore",
+              "attribute": "store"
+            },
+            {
+              "kind": "field",
+              "name": "unsubscribe",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "store",
+              "type": {
+                "text": "DataStore"
+              },
+              "default": "defaultDataStore",
+              "fieldName": "store"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "data-table",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DataTable",
+          "declaration": {
+            "name": "DataTable",
+            "module": "src/chart/data-table-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "data-table",
+          "declaration": {
+            "name": "DataTable",
+            "module": "src/chart/data-table-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/savedsearch/saved-search-dialog-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "SavedSearchDialog",
+          "members": [
+            {
+              "kind": "field",
+              "name": "store",
+              "type": {
+                "text": "SearchStore"
+              },
+              "default": "defaultSearchStore",
+              "attribute": "store"
+            },
+            {
+              "kind": "field",
+              "name": "searchableSelector",
+              "type": {
+                "text": "string"
+              },
+              "default": "'#searchable'",
+              "attribute": "searchable-selector"
+            },
+            {
+              "kind": "field",
+              "name": "unsubscribe",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "show"
+            },
+            {
+              "kind": "method",
+              "name": "showModal"
+            },
+            {
+              "kind": "method",
+              "name": "close"
+            },
+            {
+              "kind": "method",
+              "name": "addCurrentSearch",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "getDialog",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "store",
+              "type": {
+                "text": "SearchStore"
+              },
+              "default": "defaultSearchStore",
+              "fieldName": "store"
+            },
+            {
+              "name": "searchable-selector",
+              "type": {
+                "text": "string"
+              },
+              "default": "'#searchable'",
+              "fieldName": "searchableSelector"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "saved-search-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SavedSearchDialog",
+          "declaration": {
+            "name": "SavedSearchDialog",
+            "module": "src/savedsearch/saved-search-dialog-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "saved-search-dialog",
+          "declaration": {
+            "name": "SavedSearchDialog",
+            "module": "src/savedsearch/saved-search-dialog-element.ts"
+          }
+        }
+      ]
+    }
+  ]
+}

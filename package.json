@@ -3,13 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "web-types": "./web-types.json",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "update-web-types": "custom-elements-manifest analyze"
   },
   "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.10.4",
     "@tailwindcss/vite": "^4.0.15",
+    "custom-element-jet-brains-integration": "^1.7.0",
     "daisyui": "^5.0.9",
     "rollup-plugin-copy": "^3.5.0",
     "rollup-plugin-visualizer": "^5.14.0",
