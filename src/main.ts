@@ -1,4 +1,7 @@
-import "@fontsource/source-sans-3/400.css";
+import "@fontsource/source-sans-3/latin-400.css";
+import "@fontsource/source-sans-3/latin-ext-400.css";
+import "@fontsource/source-sans-3/latin-400-italic.css";
+import "@fontsource/source-sans-3/latin-ext-400-italic.css";
 import '@shoelace-style/shoelace/dist/themes/light.css';
 import './style.css' // Needs to be after light.css for variable overrides to work without !important
 import {initCookieConsent} from "./cookieconsent/cookieconsent.ts";
