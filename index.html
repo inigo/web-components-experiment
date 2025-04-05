@@ -32,16 +32,15 @@
         <div class="flex flex-col gap-4">
 
             <label for="select-state" class="sr-only">State</label>
-            <select id="select-state" class="slct" name="state[]" multiple autocomplete="off">
-                <option value="">Select a state...</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA" selected>California</option>
-                <option value="CO">Colorado</option>
-                <option value="WY" selected>Wyoming</option>
-            </select>
+            <sl-select id="select-state" size="small" clearable class="" name="state" max-options-visible="999"  placeholder="Select states" multiple>
+                <sl-option value="AL">Alabama</sl-option>
+                <sl-option value="AK">Alaska</sl-option>
+                <sl-option value="AZ">Arizona</sl-option>
+                <sl-option value="AR">Arkansas</sl-option>
+                <sl-option value="CA">California</sl-option>
+                <sl-option value="CO">Colorado</sl-option>
+                <sl-option value="WY">Wyoming</sl-option>
+            </sl-select>
 
             <label for="select-cheese" class="sr-only">Cheese</label>
             <select id="select-cheese" class="slct" name="cheese[]" multiple autocomplete="off">
