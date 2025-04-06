@@ -1,6 +1,6 @@
 :root {
-  --ss-primary-color: var(--color-primary) !important;
-  --ss-primary-content: var(--color-primary-content) !important;
+  --ss-primary-color: var(--color-info) !important;
+  --ss-primary-content: var(--color-info-content) !important;
   --ss-secondary-color: var(--color-secondary) !important;
   --ss-secondary-content: var(--color-secondary-content) !important;
   --ss-error-color: var(--color-error) !important;
