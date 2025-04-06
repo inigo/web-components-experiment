@@ -9,6 +9,7 @@ import {customElement} from "lit/decorators.js";
  */
 @customElement('data-history-manager')
 export class DataHistoryManager extends HTMLElement implements WebComponentElement {
+    private purposes: string[] = ['chartType'];
 
     /** Update the hash if it has changed, adding to the browser history */
     updateHash(newValues: Record<string, string>): void {
@@ -32,29 +33,40 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
         const hash = window.location.hash.substring(1);
         const params = this.parseHashParams(hash);
 
-        // Could avoid this coupling to the select element by creating a custom
-        // data-hash-changed element, and wrapping the select element with it
-        if (params.chartType) {
-            const el = document.querySelector(`[data-purpose="chartType"]`);
-            const selectElement = el as HTMLSelectElement;
-            if (selectElement && selectElement.value !== params.chartType) {
-                console.debug(`Because of hash change, setting chart type to ${params.chartType}`);
-                selectElement.value = params.chartType;
+        Object.entries(params).forEach(([key,value]) => {
+            if (this.purposes.includes(key) && params[key]) {
+                const el = document.querySelector(`[data-purpose=${key}]`);
+                if (!el) return;
+
+                const selectElement = el as HTMLSelectElement;
+                console.debug(`Because of hash change, setting ${key} to ${value}`);
+
+                if (selectElement.multiple) {
+                    const valuesToSelect = value.split(',').map(v => v.trim()).sort();
+
+                    if (selectElement.tagName.toLowerCase() === 'sl-select') {
+                        const slElement = el as unknown as { value: string[] };
+                        const existingValues = slElement.value.sort();
+                        if (valuesToSelect.join(',') !== existingValues.join(',')) {
+                            slElement.value = valuesToSelect;
+                        }
+                    } else {
+                        const existingValues = Array.from(selectElement.selectedOptions).map(option => option.value).sort();
+                        if (valuesToSelect.join(',') !== existingValues.join(',')) {
+                            Array.from(selectElement.options).forEach(option => {
+                                option.selected = valuesToSelect.includes(option.value);
+                            });
+                        }
+                    }
+                } else {
+                    if (selectElement.value !== value) {
+                        selectElement.value = value;
+                    }
+                }
+
                 selectElement.dispatchEvent(new Event('change', {bubbles: true}));
             }
-        }
-        if (params.cheese) {
-            const el = document.querySelector(`[data-purpose="cheese"]`);
-            const selectElement = el as HTMLSelectElement;
-            if (selectElement && selectElement.value !== params.cheese) {
-                console.debug(`Because of hash change, setting cheese to ${params.cheese}`);
-                const valuesToSelect = params.cheese.split(',').map(v => v.trim());
-                Array.from(selectElement.options).forEach(option => {
-                    option.selected = valuesToSelect.includes(option.value);
-                });
-                selectElement.dispatchEvent(new Event('change', {bubbles: true}));
-            }
-        }
+        });
     }
 
     private parseHashParams(hash: string): Record<string, string> {
@@ -68,6 +80,9 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
     }
 
     connectedCallback() {
+        const fromAttr = (name: string) => this.getAttribute(name)?.split(",").map(s => s.trim());
+        this.purposes = fromAttr('purposes') ?? this.purposes;
+
         window.addEventListener('hashchange', this.handleHashChange);
         requestAnimationFrame(() => this.handleHashChange());
     }

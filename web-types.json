@@ -35,10 +35,7 @@
           "doc-url": "",
           "attributes": [],
           "events": [],
-          "js": { "properties": [
-              { "name": "purposes", "type": "string[]" },
-              { "name": "watchedEvents", "type": "string[]" }
-          ], "events": [] }
+          "js": { "properties": [], "events": [] }
         },
         {
           "name": "data-history-manager",

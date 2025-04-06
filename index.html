@@ -65,7 +65,7 @@
 <main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
     <!-- Listens for events from a selector with purpose chartType, and converts them for the chart component -->
     <data-event-mediator watchedEvents="change,sl-change" purposes="chartType,state,cheese">
-        <data-history-manager></data-history-manager>
+        <data-history-manager purposes="chartType,state,cheese"></data-history-manager>
     </data-event-mediator>
 
     <div class="buttons flex gap-8">

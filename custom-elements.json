@@ -178,6 +178,15 @@
           "name": "DataHistoryManager",
           "members": [
             {
+              "kind": "field",
+              "name": "purposes",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "private",
+              "default": "['chartType']"
+            },
+            {
               "kind": "method",
               "name": "updateHash",
               "return": {
