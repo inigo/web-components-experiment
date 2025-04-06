@@ -43,6 +43,18 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
                 selectElement.dispatchEvent(new Event('change', {bubbles: true}));
             }
         }
+        if (params.cheese) {
+            const el = document.querySelector(`[data-purpose="cheese"]`);
+            const selectElement = el as HTMLSelectElement;
+            if (selectElement && selectElement.value !== params.cheese) {
+                console.debug(`Because of hash change, setting cheese to ${params.cheese}`);
+                const valuesToSelect = params.cheese.split(',').map(v => v.trim());
+                Array.from(selectElement.options).forEach(option => {
+                    option.selected = valuesToSelect.includes(option.value);
+                });
+                selectElement.dispatchEvent(new Event('change', {bubbles: true}));
+            }
+        }
     }
 
     private parseHashParams(hash: string): Record<string, string> {
