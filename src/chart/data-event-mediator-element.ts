@@ -1,4 +1,3 @@
-import {SlSelectEvent} from "@shoelace-style/shoelace";
 import {WebComponentElement} from "./web-component-interface.ts";
 import {DataHistoryManager} from "./data-history-manager-element.ts";
 import {customElement} from "lit/decorators.js";
@@ -21,7 +20,7 @@ export class DataEventMediator extends HTMLElement implements WebComponentElemen
             ?.dataset.purpose;
         if (purpose === "chartType") {
             const selectedItem =
-                (event as SlSelectEvent).detail?.item?.value ??
+                (event as LocalSlSelectEvent).detail?.item?.value ??
                 (event.target as HTMLSelectElement).value;
 
             if (this.historyManager) {
@@ -47,6 +46,10 @@ export class DataEventMediator extends HTMLElement implements WebComponentElemen
     disconnectedCallback() {
         document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
     }
+}
+
+interface LocalSlSelectEvent extends Event {
+    detail: { item: { value: string } };
 }
 
 
