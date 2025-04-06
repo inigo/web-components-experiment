@@ -6,6 +6,9 @@ import '@shoelace-style/shoelace/dist/themes/light.css';
 import './style.css' // Needs to be after light.css for variable overrides to work without !important
 import {initCookieConsent} from "./cookieconsent/cookieconsent.ts";
 
+import 'sortable-tablesort/dist/sortable.min.js'
+import 'sortable-tablesort/dist/sortable.a11y.min.js'
+
 import '@shoelace-style/shoelace/dist/components/tooltip/tooltip.js';
 import '@shoelace-style/shoelace/dist/components/dropdown/dropdown.js';
 import '@shoelace-style/shoelace/dist/components/menu/menu.js';

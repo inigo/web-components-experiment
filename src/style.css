@@ -57,4 +57,15 @@ body.collapse-nav { grid-template-columns: 0 1fr; }
   }
   /** In the select dropdown, change the colours (by default uses color-primary for the first item) */
   .data-select sl-option::part(base) { background-color: var(--color-white); color: var(--color-black); }
+
+  /** Sortable column headers for the table */
+  .sortable thead th:not(.no-sort) {
+    & {cursor: pointer;}
+    &::after { transition: color 0.1s ease-in-out; font-size: 1.2em; color: transparent;}
+    &:hover::after, &[aria-sort]::after { color: inherit; font-family: monospace; }
+    &::after { margin-left: 3px; content: "▸"; }
+    &[aria-sort=descending]::after { content: "▾"; }
+    &[aria-sort=ascending]::after { content: "▴"; }
+  }
+
 }
