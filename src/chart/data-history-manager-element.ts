@@ -14,14 +14,17 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
     updateHash(newValues: Record<string, string>): void {
         const hash = new URLSearchParams(window.location.hash.slice(1));
         hash.sort();
-        const originalHashString = hash.toString();
+        const originalHashString = hash.toString().replace(/%2C/g, ',');
 
-        Object.entries(newValues).forEach(([key, value]) => hash.set(key, value));
+        Object.entries(newValues).forEach(([key, value]) => {
+            (value && (value?.length ?? 1 > 0)) ? hash.set(key, value) : hash.delete(key)
+        });
         hash.sort();
+        const newHashString = hash.toString().replace(/%2C/g, ',');
 
-        console.debug(`New hash is ${hash} compared to original ${originalHashString}`);
-        if (hash.toString() !== originalHashString) {
-            history.pushState(null, '', `#${hash}`);
+        console.debug(`New hash is ${newHashString} compared to original ${originalHashString}`);
+        if (newHashString !== originalHashString) {
+            history.pushState(null, '', `#${newHashString}`);
         }
     }
 
