@@ -8,43 +8,49 @@ import {customElement} from "lit/decorators.js";
  *
  * @listens change - from a select with purpose=chartType (depending on chartTypeEvent)
  * @listens sl-select - from a Shoelace dropdown with purpose=chartType (depending on chartTypeEvent)
+ * @property {string[]} watchedEvents - a comma-separated list of event names to watch for
+ * @property {string[]} purposes - a comma-separated list of "data-purpose" values that should be on the elements raising these events
  */
 @customElement('data-event-mediator')
 export class DataEventMediator extends HTMLElement implements WebComponentElement {
-    private chartTypeEvent: string = 'sl-select';
+    private watchedEvents: string[] = ['sl-select', 'sl-change', 'change'];
+    private purposes: string[] = ['chartType'];
     private historyManager? : DataHistoryManager;
 
-    private chartTypeMediator = (event: Event) => {
+    private changeMediator = (event: Event) => {
         const purpose = ((event.target as HTMLElement)
             .closest("[data-purpose]") as HTMLElement)
             ?.dataset.purpose;
-        if (purpose === "chartType") {
+        if (purpose && this.purposes.includes(purpose)) {
             const selectedItem =
                 (event as LocalSlSelectEvent).detail?.item?.value ??
-                (event.target as HTMLSelectElement).value;
+                Array.from((event.target as HTMLSelectElement).selectedOptions).map(option => option.value);
 
             if (this.historyManager) {
-                this.historyManager.updateHash({chartType: selectedItem});
+                this.historyManager.updateHash({[purpose]: selectedItem});
             }
 
-            console.debug(`Raised new chart type changed event with value '${selectedItem}'`);
-            const newEvent: DataChartTypeChangedEvent = new CustomEvent('data-chartType-changed', {
+            console.debug(`Raised new ${purpose} changed event with value '${selectedItem}'`);
+            const newEvent = new CustomEvent(`data-${purpose}-changed`, {
                 bubbles: true,
-                detail: { chartType: selectedItem }
+                detail: { [purpose]: selectedItem }
             });
             document.dispatchEvent(newEvent);
         }
     };
 
     connectedCallback() {
-        this.chartTypeEvent = this.getAttribute('chartTypeEvent') ?? this.chartTypeEvent;
+        const fromAttr = (name: string) => this.getAttribute(name)?.split(",").map(s => s.trim());
+
+        this.watchedEvents = fromAttr('watchedEvents') ?? this.watchedEvents;
+        this.purposes = fromAttr('purposes') ?? this.purposes;
         this.historyManager = this.querySelector('data-history-manager') as DataHistoryManager;
 
-        document.addEventListener(this.chartTypeEvent, this.chartTypeMediator);
+        this.watchedEvents.forEach(name => document.addEventListener(name, this.changeMediator));
     }
 
     disconnectedCallback() {
-        document.removeEventListener(this.chartTypeEvent, this.chartTypeMediator);
+        this.watchedEvents.forEach(name => document.removeEventListener(name, this.changeMediator));
     }
 }
 

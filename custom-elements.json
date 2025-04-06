@@ -110,12 +110,23 @@
           "members": [
             {
               "kind": "field",
-              "name": "chartTypeEvent",
+              "name": "watchedEvents",
               "type": {
-                "text": "string"
+                "text": "string[]"
               },
               "privacy": "private",
-              "default": "'sl-select'"
+              "default": "['sl-select', 'sl-change', 'change']",
+              "description": "a comma-separated list of event names to watch for"
+            },
+            {
+              "kind": "field",
+              "name": "purposes",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "private",
+              "default": "['chartType']",
+              "description": "a comma-separated list of \"data-purpose\" values that should be on the elements raising these events"
             },
             {
               "kind": "field",
@@ -127,7 +138,7 @@
             },
             {
               "kind": "field",
-              "name": "chartTypeMediator",
+              "name": "changeMediator",
               "privacy": "private"
             }
           ],

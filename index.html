@@ -33,7 +33,8 @@
 
             <label for="select-state" class="sr-only">State</label>
             <sl-select id="select-state" size="small" value="AL AK" clearable class="data-select"
-                       name="state" max-options-visible="999"  placeholder="Select states" multiple>
+                       name="state" max-options-visible="999" placeholder="Select states" multiple
+                       data-purpose="state">
                 <sl-icon slot="expand-icon" name="caret-down-fill" class="text-info"></sl-icon>
 
                 <!-- Values cannot contain spaces -->
@@ -47,11 +48,10 @@
             </sl-select>
 
             <label for="select-cheese" class="sr-only">Cheese</label>
-            <select id="select-cheese" class="slct" name="cheese[]" multiple autocomplete="off">
-                <option value="">Select a cheese...</option>
-                <option value="AL">Brie</option>
-                <option value="AK">Cheddar</option>
-                <option value="AZ">Gouda</option>
+            <select id="select-cheese" class="slct" name="cheese[]" data-purpose="cheese" multiple autocomplete="off">
+                <option value="brie">Brie</option>
+                <option value="cheddar">Cheddar</option>
+                <option value="gouda">Gouda</option>
             </select>
 
         </div>
@@ -64,7 +64,7 @@
 
 <main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
     <!-- Listens for events from a selector with purpose chartType, and converts them for the chart component -->
-    <data-event-mediator chartTypeEvent="change">
+    <data-event-mediator watchedEvents="change,sl-change" purposes="chartType,state,cheese">
         <data-history-manager></data-history-manager>
     </data-event-mediator>
 
