@@ -37,6 +37,11 @@ export default defineConfig({
                         'highcharts/modules/accessibility.js',
                         'highcharts/modules/offline-exporting.js',
                     ],
+                    lit: [
+                        '@lit/reactive-element',
+                        'lit-html',
+                    ],
+                    shoelace: ['@shoelace-style/shoelace/dist/shoelace.js'],
                 },
             },
         },
