@@ -39,9 +39,15 @@ export default defineConfig({
                     ],
                     lit: [
                         '@lit/reactive-element',
+                        '@lit/reactive-element/decorators.js',
                         'lit-html',
+                        'lit-element',
                     ],
                     shoelace: ['@shoelace-style/shoelace/dist/shoelace.js'],
+                    vendor: [
+                        'vanilla-cookieconsent',
+                        'slim-select',
+                    ]
                 },
             },
         },
