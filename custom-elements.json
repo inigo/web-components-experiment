@@ -15,10 +15,9 @@
               "kind": "field",
               "name": "store",
               "type": {
-                "text": "DataStore"
+                "text": "DataStore | undefined"
               },
-              "default": "defaultDataStore",
-              "attribute": "store"
+              "default": "undefined"
             },
             {
               "kind": "field",
@@ -52,17 +51,13 @@
               "kind": "method",
               "name": "updateChartData",
               "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "connectToStore"
             }
           ],
           "attributes": [
-            {
-              "name": "store",
-              "type": {
-                "text": "DataStore"
-              },
-              "default": "defaultDataStore",
-              "fieldName": "store"
-            },
             {
               "name": "chartType",
               "type": {
@@ -255,6 +250,160 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/chart/data-store-element.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DataStore",
+          "members": [
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "ChartData | undefined"
+              },
+              "privacy": "private",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "listeners",
+              "type": {
+                "text": "Function[]"
+              },
+              "privacy": "private",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "queryParams",
+              "type": {
+                "text": "Record<string, string>"
+              },
+              "privacy": "private",
+              "default": "{}"
+            },
+            {
+              "kind": "field",
+              "name": "relevantChanges",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "private",
+              "default": "['cheese']",
+              "attribute": "relevantChanges"
+            },
+            {
+              "kind": "field",
+              "name": "baseUrl",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "private",
+              "default": "\"/data.json\"",
+              "attribute": "baseUrl"
+            },
+            {
+              "kind": "field",
+              "name": "fakeData",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false",
+              "attribute": "fakeData"
+            },
+            {
+              "kind": "method",
+              "name": "fetchData"
+            },
+            {
+              "kind": "method",
+              "name": "getData",
+              "return": {
+                "type": {
+                  "text": "ChartData | undefined"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "dataParamsHandler"
+            },
+            {
+              "kind": "method",
+              "name": "subscribe",
+              "parameters": [
+                {
+                  "name": "listener",
+                  "type": {
+                    "text": "Function"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "notifyListeners",
+              "privacy": "private"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "relevantChanges",
+              "type": {
+                "text": "array"
+              },
+              "default": "['cheese']",
+              "fieldName": "relevantChanges"
+            },
+            {
+              "name": "baseUrl",
+              "type": {
+                "text": "string"
+              },
+              "default": "\"/data.json\"",
+              "fieldName": "baseUrl"
+            },
+            {
+              "name": "fakeData",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "fakeData"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "data-store",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DataStore",
+          "declaration": {
+            "name": "DataStore",
+            "module": "src/chart/data-store-element.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "data-store",
+          "declaration": {
+            "name": "DataStore",
+            "module": "src/chart/data-store-element.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/chart/data-table-element.ts",
       "declarations": [
         {
@@ -266,25 +415,18 @@
               "kind": "field",
               "name": "store",
               "type": {
-                "text": "DataStore"
+                "text": "DataStore | undefined"
               },
-              "default": "defaultDataStore",
-              "attribute": "store"
+              "default": "undefined"
             },
             {
               "kind": "field",
               "name": "unsubscribe",
               "privacy": "private"
-            }
-          ],
-          "attributes": [
+            },
             {
-              "name": "store",
-              "type": {
-                "text": "DataStore"
-              },
-              "default": "defaultDataStore",
-              "fieldName": "store"
+              "kind": "method",
+              "name": "connectToStore"
             }
           ],
           "superclass": {

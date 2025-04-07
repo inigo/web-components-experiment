@@ -1,21 +1,24 @@
 import {DataChangedEvent} from "./data-event-mediator-element.ts";
+import {customElement, property} from "lit/decorators.js";
+import {LitElement} from "lit";
 
-export class DataStore {
+@customElement('data-store')
+export class DataStore extends LitElement {
     private data: ChartData | undefined = undefined;
     private listeners: Function[] = [];
-    private relevantChanges = ['cheese', 'state'];
     private queryParams: Record<string, string> = {};
+
+    @property({converter: parseStringArray})
+    private relevantChanges = ['cheese'];
+
+    @property()
     private baseUrl = "/data.json";
 
-    private fakeData = true
+    @property()
+    private fakeData = false;
 
-    constructor() {
-        this.retrieveData().then(() => this.notifyListeners());
-        // @todo change this class into a component, so lifecycle is handled automatically
-        this.connectedCallback();
-    }
-
-    private async retrieveData() {
+    async fetchData() {
+        console.debug("Retrieving data for data store");
         try {
             const url = new URL(this.baseUrl, window.location.origin);
             url.search = new URLSearchParams(this.queryParams).toString();
@@ -25,6 +28,7 @@ export class DataStore {
                 await fetch(url.toString().replace('?', '_')) :
                 await fetch(url);
             this.data = await response.json();
+            this.notifyListeners();
         } catch (error) {
             console.error('Error fetching the data:', error);
             // When using fake data from the filesystem, most combinations of results
@@ -32,12 +36,21 @@ export class DataStore {
             if (this.fakeData) {
                 const response = await fetch(this.baseUrl);
                 this.data = await response.json();
+                this.notifyListeners();
             }
         }
     }
 
     getData(): ChartData | undefined {
         return this.data;
+    }
+
+    dataParamsHandler = async (event: Event) => {
+        const ev = event as DataChangedEvent;
+        ev.detail.newValue=="" ?
+            delete this.queryParams[ev.detail.fieldChanged] :
+            this.queryParams[ev.detail.fieldChanged] = ev.detail.newValue;
+        await this.fetchData();
     }
 
     subscribe(listener: Function) {
@@ -51,17 +64,9 @@ export class DataStore {
         this.listeners.forEach(listener => listener(this.data));
     }
 
-    dataParamsHandler = async (event: Event) => {
-        const ev = event as DataChangedEvent;
-        ev.detail.newValue=="" ?
-            delete this.queryParams[ev.detail.fieldChanged] :
-            this.queryParams[ev.detail.fieldChanged] = ev.detail.newValue;
-        await this.retrieveData();
-        this.notifyListeners();
-    }
-
-    connectedCallback() {
+    async connectedCallback() {
         this.relevantChanges.forEach(change => document.addEventListener(`data-${change}-changed`, this.dataParamsHandler));
+        await this.fetchData();
     }
 
     disconnectedCallback() {
@@ -80,6 +85,6 @@ export interface Series {
     data: number[];
 }
 
-export const defaultDataStore = new DataStore();
-
-
+function parseStringArray(value: string | null, _: unknown) {
+    return (value ?? "").split(",").map(s => s.trim());
+}

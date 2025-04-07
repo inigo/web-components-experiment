@@ -12,10 +12,6 @@
           "doc-url": "",
           "attributes": [
             {
-              "name": "store",
-              "value": { "type": "DataStore", "default": "defaultDataStore" }
-            },
-            {
               "name": "chartType",
               "value": { "type": "string", "default": "'column'" }
             }
@@ -23,7 +19,7 @@
           "events": [],
           "js": {
             "properties": [
-              { "name": "store", "type": "DataStore" },
+              { "name": "store", "type": "DataStore | undefined" },
               { "name": "chartType", "type": "string" }
             ],
             "events": []
@@ -46,18 +42,39 @@
           "js": { "properties": [{ "name": "handleHashChange" }], "events": [] }
         },
         {
-          "name": "data-table",
+          "name": "data-store",
           "description": "\n---\n",
           "doc-url": "",
           "attributes": [
             {
-              "name": "store",
-              "value": { "type": "DataStore", "default": "defaultDataStore" }
+              "name": "relevantChanges",
+              "value": { "type": "array", "default": "['cheese']" }
+            },
+            {
+              "name": "baseUrl",
+              "value": { "type": "string", "default": "\"/data.json\"" }
+            },
+            {
+              "name": "fakeData",
+              "value": { "type": "boolean", "default": "false" }
             }
           ],
           "events": [],
           "js": {
-            "properties": [{ "name": "store", "type": "DataStore" }],
+            "properties": [{ "name": "dataParamsHandler" }],
+            "events": []
+          }
+        },
+        {
+          "name": "data-table",
+          "description": "\n---\n",
+          "doc-url": "",
+          "attributes": [],
+          "events": [],
+          "js": {
+            "properties": [
+              { "name": "store", "type": "DataStore | undefined" }
+            ],
             "events": []
           }
         },

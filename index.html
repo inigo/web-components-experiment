@@ -66,6 +66,7 @@
     <!-- Listens for events from a selector with purpose chartType, and converts them for the chart component -->
     <data-event-mediator watchedEvents="change,sl-change" purposes="chartType,state,cheese">
         <data-history-manager purposes="chartType,state,cheese"></data-history-manager>
+        <data-store baseUrl="./data.json" relevantChanges="cheese" fakeData="fakeData"></data-store>
     </data-event-mediator>
 
     <div class="buttons flex gap-8">

@@ -2,11 +2,15 @@ import {DataHistoryManager} from "./data-history-manager-element.ts";
 import {DataEventMediator} from "./data-event-mediator-element.ts";
 import {DataChart} from "./data-chart-element.ts";
 import {DataTable} from "./data-table-element.ts";
+import {DataStore} from "./data-store-element.ts";
 
 export function registerDataChartComponents(): void {
     // Web components using @customElement can alternatively be registered by importing them individually
     // or this method will register all of them together
 
+    if (!customElements.get('data-store')) {
+        customElements.define('data-store', DataStore);
+    }
     if (!customElements.get('data-event-mediator')) {
         customElements.define('data-event-mediator', DataEventMediator);
     }

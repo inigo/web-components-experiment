@@ -1,7 +1,7 @@
 import Highcharts, {SeriesOptionsType} from "highcharts";
-import {LitElement, html} from 'lit';
+import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {ChartData, DataStore, defaultDataStore} from "./datastore.ts";
+import {ChartData, DataStore} from "./data-store-element.ts";
 import {PropertyValues} from "@lit/reactive-element";
 import {DataChangedEvent} from "./data-event-mediator-element.ts";
 
@@ -12,8 +12,7 @@ import {DataChangedEvent} from "./data-event-mediator-element.ts";
  */
 @customElement('data-chart')
 export class DataChart extends LitElement {
-    @property({ type: DataStore })
-    store: DataStore = defaultDataStore;
+    store: DataStore | undefined = undefined;
 
     @property()
     chartType: string = 'column';
@@ -40,9 +39,10 @@ export class DataChart extends LitElement {
     }
 
     firstUpdated() {
+        if (!this.store) this.connectToStore();
         const chartElement = this.shadowRoot?.getElementById('shadow-chart');
         if (chartElement) {
-            const data = this.store.getData();
+            const data = this.store?.getData();
             this.chart = Highcharts.chart(chartElement, {
                 credits: {enabled: false},
                 chart: {
@@ -89,7 +89,7 @@ export class DataChart extends LitElement {
 
     private updateChartData() {
         console.debug("Updating chart data");
-        const data = this.store.getData();
+        const data = this.store?.getData();
 
         if (!this.chart || !data) return;
 
@@ -113,12 +113,17 @@ export class DataChart extends LitElement {
         chart.redraw();
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.unsubscribe = this.store.subscribe((_: ChartData) => {
+    connectToStore() {
+        console.debug("Connecting chart to data store");
+        this.store = document.querySelector('data-store') as DataStore;
+        this.unsubscribe = this.store?.subscribe((_: ChartData) => {
             console.log("Received callback with chart data");
             this.updateChartData();
         });
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
         document.addEventListener('data-chartType-changed', this.handleChartTypeChanged);
     }
 

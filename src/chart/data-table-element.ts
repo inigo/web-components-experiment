@@ -1,18 +1,18 @@
-import {customElement, property} from "lit/decorators.js";
+import {customElement} from "lit/decorators.js";
 import {html, LitElement} from "lit";
-import {ChartData, DataStore, defaultDataStore} from "./datastore.ts";
+import {ChartData, DataStore} from "./data-store-element.ts";
 
 
 @customElement('data-table')
 export class DataTable extends LitElement {
-    @property({ type: DataStore })
-    store: DataStore = defaultDataStore;
+    store: DataStore | undefined = undefined;
 
     private unsubscribe = () => {};
 
     render() {
         console.debug("Rendering table");
-        const data = this.store.getData();
+        if (!this.store) this.connectToStore();
+        const data = this.store?.getData();
         if (!data) return html`<div>No data available</div>`;
         return html`
             <table class="table sortable tabular-nums">
@@ -35,9 +35,10 @@ export class DataTable extends LitElement {
     /** Disables the shadow root, so Tailwind classes work */
     createRenderRoot() { return this; }
 
-    connectedCallback() {
-        super.connectedCallback();
-        this.unsubscribe = this.store.subscribe((_: ChartData) => {
+    connectToStore() {
+        console.debug("Connecting table to data store");
+        this.store = document.querySelector('data-store') as DataStore;
+        this.unsubscribe = this.store?.subscribe((_: ChartData) => {
             this.requestUpdate();
         });
     }
