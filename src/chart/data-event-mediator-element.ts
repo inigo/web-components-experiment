@@ -31,9 +31,9 @@ export class DataEventMediator extends HTMLElement implements WebComponentElemen
             }
 
             console.debug(`Raised new ${purpose} changed event with value '${selectedItem}'`);
-            const newEvent = new CustomEvent(`data-${purpose}-changed`, {
+            const newEvent: DataChangedEvent = new CustomEvent(`data-${purpose}-changed`, {
                 bubbles: true,
-                detail: { [purpose]: selectedItem }
+                detail: { fieldChanged: purpose, newValue: selectedItem }
             });
             document.dispatchEvent(newEvent);
         }
@@ -58,5 +58,4 @@ interface LocalSlSelectEvent extends Event {
     detail: { item: { value: string } };
 }
 
-
-export type DataChartTypeChangedEvent = CustomEvent<{ chartType: string }>;
+export type DataChangedEvent = CustomEvent<{ fieldChanged: string, newValue: string }>;

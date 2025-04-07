@@ -3,7 +3,7 @@ import {LitElement, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ChartData, DataStore, defaultDataStore} from "./datastore.ts";
 import {PropertyValues} from "@lit/reactive-element";
-import {DataChartTypeChangedEvent} from "./data-event-mediator-element.ts";
+import {DataChangedEvent} from "./data-event-mediator-element.ts";
 
 /**
  * Data visualization chart, powered by Highcharts.
@@ -22,8 +22,8 @@ export class DataChart extends LitElement {
     private chart: Highcharts.Chart | null = null;
 
     private handleChartTypeChanged = (event: Event) => {
-        const dataEvent = event as DataChartTypeChangedEvent;
-        const selectedChartType = dataEvent.detail.chartType;
+        const dataEvent = event as DataChangedEvent;
+        const selectedChartType = dataEvent.detail.newValue;
         console.debug(`Changed chart type to ${selectedChartType}`);
         this.chartType = selectedChartType;
     }
