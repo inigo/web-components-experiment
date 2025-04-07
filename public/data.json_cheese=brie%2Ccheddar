@@ -1,0 +1,9 @@
+ {
+     "title": "Cats eating Brie or Cheddar",
+     "categories": ["Siamese", "Persian", "Maine Coon", "Bengal", "Sphynx"],
+     "series": [
+         { "name": "Indoor", "data": [5.99, 3, 4, 7, 2] },
+         { "name": "Outdoor", "data": [2.52, 2, 3, 2, 1] },
+         { "name": "Stray", "data": [1.11, 1, 2, 1, 3] }
+     ]
+ }

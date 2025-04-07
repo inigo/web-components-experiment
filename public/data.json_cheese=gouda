@@ -1,0 +1,9 @@
+ {
+     "title": "Cats eating Gouda",
+     "categories": ["Siamese", "Persian", "Maine Coon", "Bengal", "Sphynx"],
+     "series": [
+         { "name": "Indoor", "data": [2, 1.1, 4, 3, 0.44] },
+         { "name": "Outdoor", "data": [1, 1, 2, 1, 0.1] },
+         { "name": "Stray", "data": [0.4, 0.3, 0, 0, 1] }
+     ]
+ }
