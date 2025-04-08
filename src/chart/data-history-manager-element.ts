@@ -1,6 +1,7 @@
-import {WebComponentElement} from "./web-component-interface.ts";
-import {customElement} from "lit/decorators.js";
+import {customElement, property} from "lit/decorators.js";
 import {listen} from "../component-utils/listen.ts";
+import {LitElement} from "lit";
+import {parseStringArray} from "../component-utils/property-converters.ts";
 
 /**
  * Keep the browser history aligned with the current state of the data chart, by
@@ -9,8 +10,13 @@ import {listen} from "../component-utils/listen.ts";
  * @listens hashchange
  */
 @customElement('data-history-manager')
-export class DataHistoryManager extends HTMLElement implements WebComponentElement {
+export class DataHistoryManager extends LitElement {
+    @property({converter: parseStringArray})
     private purposes: string[] = ['chartType'];
+
+    protected firstUpdated() {
+        requestAnimationFrame(() => this.handleHashChange());
+    }
 
     /** Update the hash if it has changed, adding to the browser history */
     updateHash(newValues: Record<string, string>): void {
@@ -79,10 +85,5 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
         searchParams.forEach((value, key) => result[key] = value);
 
         return result;
-    }
-    connectedCallback() {
-        const fromAttr = (name: string) => this.getAttribute(name)?.split(",").map(s => s.trim());
-        this.purposes = fromAttr('purposes') ?? this.purposes;
-        requestAnimationFrame(() => this.handleHashChange());
     }
 }

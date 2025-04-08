@@ -1,6 +1,7 @@
 import {DataChangedEvent} from "./data-event-mediator-element.ts";
 import {customElement, property} from "lit/decorators.js";
 import {LitElement} from "lit";
+import {parseStringArray} from "../component-utils/property-converters.ts";
 
 @customElement('data-store')
 export class DataStore extends LitElement {
@@ -83,8 +84,4 @@ export interface ChartData {
 export interface Series {
     name: string;
     data: number[];
-}
-
-function parseStringArray(value: string | null, _: unknown) {
-    return (value ?? "").split(",").map(s => s.trim());
 }

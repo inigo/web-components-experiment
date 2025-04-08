@@ -1,6 +1,7 @@
-import {WebComponentElement} from "./web-component-interface.ts";
 import {DataHistoryManager} from "./data-history-manager-element.ts";
-import {customElement} from "lit/decorators.js";
+import {customElement, property} from "lit/decorators.js";
+import {LitElement} from "lit";
+import {parseStringArray} from "../component-utils/property-converters.ts";
 
 /**
  * Decouples the chart component from the components changing its values, by
@@ -12,9 +13,14 @@ import {customElement} from "lit/decorators.js";
  * @property {string[]} purposes - a comma-separated list of "data-purpose" values that should be on the elements raising these events
  */
 @customElement('data-event-mediator')
-export class DataEventMediator extends HTMLElement implements WebComponentElement {
+export class DataEventMediator extends LitElement {
+
+    @property({converter: parseStringArray})
     private watchedEvents: string[] = ['sl-select', 'sl-change', 'change'];
+
+    @property({converter: parseStringArray})
     private purposes: string[] = ['chartType'];
+
     private historyManager? : DataHistoryManager;
 
     private changeMediator = (event: Event) => {
@@ -40,12 +46,7 @@ export class DataEventMediator extends HTMLElement implements WebComponentElemen
     };
 
     connectedCallback() {
-        const fromAttr = (name: string) => this.getAttribute(name)?.split(",").map(s => s.trim());
-
-        this.watchedEvents = fromAttr('watchedEvents') ?? this.watchedEvents;
-        this.purposes = fromAttr('purposes') ?? this.purposes;
         this.historyManager = this.querySelector('data-history-manager') as DataHistoryManager;
-
         this.watchedEvents.forEach(name => document.addEventListener(name, this.changeMediator));
     }
 
