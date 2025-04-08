@@ -1,5 +1,6 @@
 import {WebComponentElement} from "./web-component-interface.ts";
 import {customElement} from "lit/decorators.js";
+import {listen} from "../component-utils/listen.ts";
 
 /**
  * Keep the browser history aligned with the current state of the data chart, by
@@ -29,11 +30,12 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
         }
     }
 
+    @listen("hashchange", {attachTo: "window"})
     handleHashChange = () => {
         const hash = window.location.hash.substring(1);
         const params = this.parseHashParams(hash);
 
-        Object.entries(params).forEach(([key,value]) => {
+        Object.entries(params).forEach(([key, value]) => {
             if (this.purposes.includes(key) && params[key]) {
                 const el = document.querySelector(`[data-purpose=${key}]`);
                 if (!el) return;
@@ -78,16 +80,9 @@ export class DataHistoryManager extends HTMLElement implements WebComponentEleme
 
         return result;
     }
-
     connectedCallback() {
         const fromAttr = (name: string) => this.getAttribute(name)?.split(",").map(s => s.trim());
         this.purposes = fromAttr('purposes') ?? this.purposes;
-
-        window.addEventListener('hashchange', this.handleHashChange);
         requestAnimationFrame(() => this.handleHashChange());
-    }
-
-    disconnectedCallback() {
-        window.removeEventListener('hashchange', this.handleHashChange);
     }
 }

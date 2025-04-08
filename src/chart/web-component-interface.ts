@@ -3,6 +3,6 @@
  * that the lifecycle methods are unused.
  */
 export interface WebComponentElement extends HTMLElement {
-    connectedCallback(): void;
-    disconnectedCallback(): void;
+    connectedCallback?(): void;
+    disconnectedCallback?(): void;
 }

@@ -4,6 +4,7 @@ import {customElement, property} from 'lit/decorators.js';
 import {ChartData, DataStore} from "./data-store-element.ts";
 import {PropertyValues} from "@lit/reactive-element";
 import {DataChangedEvent} from "./data-event-mediator-element.ts";
+import {listen} from "../component-utils/listen.ts";
 
 /**
  * Data visualization chart, powered by Highcharts.
@@ -20,7 +21,8 @@ export class DataChart extends LitElement {
     private unsubscribe = () => {};
     private chart: Highcharts.Chart | null = null;
 
-    private handleChartTypeChanged = (event: Event) => {
+    @listen("data-chartType-changed")
+    public handleChartTypeChanged = (event: Event) => {
         const dataEvent = event as DataChangedEvent;
         const selectedChartType = dataEvent.detail.newValue;
         console.debug(`Changed chart type to ${selectedChartType}`);
@@ -122,15 +124,9 @@ export class DataChart extends LitElement {
         });
     }
 
-    connectedCallback() {
-        super.connectedCallback();
-        document.addEventListener('data-chartType-changed', this.handleChartTypeChanged);
-    }
-
     disconnectedCallback() {
         super.disconnectedCallback();
         this.unsubscribe();
-        document.removeEventListener('data-chartType-changed', this.handleChartTypeChanged);
         if (this.chart) {
             this.chart.destroy();
             this.chart = null;
