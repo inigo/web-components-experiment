@@ -41,39 +41,40 @@ export class DataHistoryManager extends LitElement {
         const hash = window.location.hash.substring(1);
         const params = this.parseHashParams(hash);
 
-        Object.entries(params).forEach(([key, value]) => {
-            if (this.purposes.includes(key) && params[key]) {
-                const el = document.querySelector(`[data-purpose=${key}]`);
-                if (!el) return;
+        this.purposes.forEach(purpose => {
+            const key = purpose;
+            const value = params[purpose];
 
-                const selectElement = el as HTMLSelectElement;
-                console.debug(`Because of hash change, setting ${key} to ${value}`);
+            const el = document.querySelector(`[data-purpose=${key}]`);
+            if (!el) return;
 
-                if (selectElement.multiple) {
-                    const valuesToSelect = value.split(',').map(v => v.trim()).sort();
+            const selectElement = el as HTMLSelectElement;
+            console.debug(`Because of hash change, setting ${key} to ${value}`);
 
-                    if (selectElement.tagName.toLowerCase() === 'sl-select') {
-                        const slElement = el as unknown as { value: string[] };
-                        const existingValues = slElement.value.sort();
-                        if (valuesToSelect.join(',') !== existingValues.join(',')) {
-                            slElement.value = valuesToSelect;
-                        }
-                    } else {
-                        const existingValues = Array.from(selectElement.selectedOptions).map(option => option.value).sort();
-                        if (valuesToSelect.join(',') !== existingValues.join(',')) {
-                            Array.from(selectElement.options).forEach(option => {
-                                option.selected = valuesToSelect.includes(option.value);
-                            });
-                        }
+            if (selectElement.multiple) {
+                const valuesToSelect = value ? value.split(',').map(v => v.trim()).sort() : [];
+
+                if (selectElement.tagName.toLowerCase() === 'sl-select') {
+                    const slElement = el as unknown as { value: string[] };
+                    const existingValues = slElement.value.sort();
+                    if (valuesToSelect.join(',') !== existingValues.join(',')) {
+                        slElement.value = valuesToSelect;
                     }
                 } else {
-                    if (selectElement.value !== value) {
-                        selectElement.value = value;
+                    const existingValues = Array.from(selectElement.selectedOptions).map(option => option.value).sort();
+                    if (valuesToSelect.join(',') !== existingValues.join(',')) {
+                        Array.from(selectElement.options).forEach(option => {
+                            option.selected = valuesToSelect.includes(option.value);
+                        });
                     }
                 }
-
-                selectElement.dispatchEvent(new Event('change', {bubbles: true}));
+            } else {
+                if (selectElement.value !== value) {
+                    if (value) selectElement.value = value;
+                }
             }
+
+            selectElement.dispatchEvent(new Event('change', {bubbles: true}));
         });
     }
 
