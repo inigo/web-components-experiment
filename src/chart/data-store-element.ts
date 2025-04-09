@@ -65,9 +65,10 @@ export class DataStore extends LitElement {
         this.listeners.forEach(listener => listener(this.data));
     }
 
-    async connectedCallback() {
+    connectedCallback() {
         this.relevantChanges.forEach(change => document.addEventListener(`data-${change}-changed`, this.dataParamsHandler));
-        await this.fetchData();
+        // noinspection JSIgnoredPromiseFromCall
+        this.fetchData();
     }
 
     disconnectedCallback() {
