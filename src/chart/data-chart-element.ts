@@ -1,10 +1,10 @@
 import Highcharts, {SeriesOptionsType} from "highcharts";
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {ChartData, DataStore} from "./data-store-element.ts";
 import {PropertyValues} from "@lit/reactive-element";
 import {DataChangedEvent} from "./data-event-mediator-element.ts";
 import {listen} from "../component-utils/listen.ts";
+import {DataStoreController} from "./data-store-controller.ts";
 
 /**
  * Data visualization chart, powered by Highcharts.
@@ -13,12 +13,11 @@ import {listen} from "../component-utils/listen.ts";
  */
 @customElement('data-chart')
 export class DataChart extends LitElement {
-    store: DataStore | undefined = undefined;
+    private storeController = new DataStoreController(this);
 
     @property()
     chartType: string = 'column';
 
-    private unsubscribe = () => {};
     private chart: Highcharts.Chart | null = null;
 
     @listen("data-chartType-changed")
@@ -41,10 +40,9 @@ export class DataChart extends LitElement {
     }
 
     firstUpdated() {
-        if (!this.store) this.connectToStore();
         const chartElement = this.shadowRoot?.getElementById('shadow-chart');
         if (chartElement) {
-            const data = this.store?.getData();
+            const data = this.storeController.getData();
             this.chart = Highcharts.chart(chartElement, {
                 credits: {enabled: false},
                 chart: {
@@ -91,7 +89,7 @@ export class DataChart extends LitElement {
 
     private updateChartData() {
         console.debug("Updating chart data");
-        const data = this.store?.getData();
+        const data = this.storeController.getData();
 
         if (!this.chart || !data) return;
 
@@ -115,18 +113,8 @@ export class DataChart extends LitElement {
         chart.redraw();
     }
 
-    connectToStore() {
-        console.debug("Connecting chart to data store");
-        this.store = document.querySelector('data-store') as DataStore;
-        this.unsubscribe = this.store?.subscribe((_: ChartData) => {
-            console.log("Received callback with chart data");
-            this.updateChartData();
-        });
-    }
-
     disconnectedCallback() {
         super.disconnectedCallback();
-        this.unsubscribe();
         if (this.chart) {
             this.chart.destroy();
             this.chart = null;
