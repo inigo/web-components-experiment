@@ -62,7 +62,7 @@
     See the fine privacy policy
 </footer>
 
-<main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main">
+<main id="chartHolder" class="flex flex-col gap-2 p-4 grid-area-main max-w-[min(calc(100vw-300px),60rem)] min-w-120">
     <!-- Listens for events from a selector with purpose chartType, and converts them for the chart component -->
     <data-event-mediator watchedEvents="change,sl-change" purposes="chartType,state,cheese">
         <data-history-manager purposes="chartType,state,cheese"></data-history-manager>
