@@ -46,7 +46,6 @@ export default defineConfig({
                     shoelace: ['@shoelace-style/shoelace/dist/shoelace.js'],
                     vendor: [
                         'vanilla-cookieconsent',
-                        'slim-select',
                     ]
                 },
             },
