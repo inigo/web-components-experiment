@@ -1,10 +1,15 @@
-export class SearchStore {
-    readonly storageKey = 'saved-searches';
+import {ReactiveController, ReactiveControllerHost} from "lit";
 
+export class SearchStoreController implements ReactiveController {
+    private readonly storageKey = 'saved-searches';
+    private host: ReactiveControllerHost;
     private searches: SavedSearch[] = [];
-    private listeners: Function[] = [];
 
-    constructor() {
+    constructor(host: ReactiveControllerHost) {
+        (this.host = host).addController(this);
+    }
+
+    hostConnected() {
         this.loadFromStorage();
     }
 
@@ -31,25 +36,14 @@ export class SearchStore {
         const newSearch = { id: crypto.randomUUID(), title, query, timestamp: Date.now() };
         this.searches = [...this.searches, newSearch];
         this.saveToStorage();
-        this.notifyListeners();
+        this.host.requestUpdate();
         return newSearch;
     }
 
     removeSearch(id: string) {
         this.searches = this.searches.filter(search => search.id !== id);
         this.saveToStorage();
-        this.notifyListeners();
-    }
-
-    subscribe(listener: Function) {
-        this.listeners.push(listener);
-        return () => {
-            this.listeners = this.listeners.filter(l => l !== listener);
-        };
-    }
-
-    private notifyListeners() {
-        this.listeners.forEach(listener => listener(this.searches));
+        this.host.requestUpdate();
     }
 }
 
@@ -59,7 +53,5 @@ export interface SavedSearch {
     query: string;
     timestamp: number;
 }
-
-export const defaultSearchStore = new SearchStore();
 
 

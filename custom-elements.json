@@ -484,23 +484,15 @@
           "members": [
             {
               "kind": "field",
-              "name": "storeController",
+              "name": "dataStore",
               "privacy": "private",
               "default": "new DataStoreController(this)"
             },
             {
               "kind": "field",
-              "name": "store",
-              "type": {
-                "text": "SearchStore"
-              },
-              "default": "defaultSearchStore",
-              "attribute": "store"
-            },
-            {
-              "kind": "field",
-              "name": "unsubscribe",
-              "privacy": "private"
+              "name": "searchStore",
+              "privacy": "private",
+              "default": "new SearchStoreController(this)"
             },
             {
               "kind": "method",
@@ -523,16 +515,6 @@
               "kind": "field",
               "name": "getDialog",
               "privacy": "private"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "store",
-              "type": {
-                "text": "SearchStore"
-              },
-              "default": "defaultSearchStore",
-              "fieldName": "store"
             }
           ],
           "superclass": {

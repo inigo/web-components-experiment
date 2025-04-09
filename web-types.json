@@ -96,20 +96,9 @@
           "name": "saved-search-dialog",
           "description": "\n---\n",
           "doc-url": "",
-          "attributes": [
-            {
-              "name": "store",
-              "value": {
-                "type": "SearchStore",
-                "default": "defaultSearchStore"
-              }
-            }
-          ],
+          "attributes": [],
           "events": [],
-          "js": {
-            "properties": [{ "name": "store", "type": "SearchStore" }],
-            "events": []
-          }
+          "js": { "properties": [], "events": [] }
         }
       ]
     },
