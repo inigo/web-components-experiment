@@ -42,6 +42,10 @@ export class DataStore extends LitElement {
         }
     }
 
+    getQuery() {
+        return "#"+new URLSearchParams(this.queryParams).toString();
+    }
+
     getData(): ChartData | undefined {
         return this.data;
     }

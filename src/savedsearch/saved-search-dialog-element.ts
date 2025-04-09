@@ -1,14 +1,14 @@
 import {html, LitElement} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {defaultSearchStore, SavedSearch, SearchStore} from "./searchstore.ts";
+import {DataStoreController} from "../chart/data-store-controller.ts";
 
 @customElement('saved-search-dialog')
 export class SavedSearchDialog extends LitElement {
+  private storeController = new DataStoreController(this);
+
   @property({ type: SearchStore })
   store: SearchStore = defaultSearchStore;
-
-  @property({ type: String, attribute: 'searchable-selector' })
-  searchableSelector = '#searchable'; // Can be overridden with searchable-selector attribute
 
   private unsubscribe = () => {};
 
@@ -35,15 +35,12 @@ export class SavedSearchDialog extends LitElement {
   close() { this.getDialog().close() }
 
   private addCurrentSearch() {
-    console.debug(`Adding current search from element ${this.searchableSelector}`);
-    // @todo Work out the best place to get this info - particularly the title
-    // const chart = document.querySelector(this.searchableSelector) as HTMLElement;
-    const query = window.location.hash;
-    const title =  query; // chart.getAttribute('data-title');
+    const query = this.storeController.getQuery();
+    const title =  this.storeController.getData()?.title;
     if (query && title) {
       this.store.addSearch(title, query);
     } else {
-      console.warn(`Could not add current search: no query or title found on element ${this.searchableSelector}`);
+      console.warn(`Could not add current search: no query or title found in store`);
     }
   }
 
@@ -66,7 +63,7 @@ export class SavedSearchDialog extends LitElement {
                 ${this.store.getSearches().map(search => html`
                   <li>
                     <div class="flex justify-between items-center">
-                      <a class="link link-primary link-hover" href="${search.query}">${search.title}</a>
+                      <a class="link link-primary link-hover" @click="${this.close}" href="${search.query}">${search.title}</a>
                       <sl-icon-button name="trash3" @click=${() => this.store.removeSearch(search.id)}></sl-icon-button>
                     </div>
                   </li>

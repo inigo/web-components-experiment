@@ -10,9 +10,8 @@ export class DataStoreController implements ReactiveController {
         (this.host = host).addController(this);
     }
 
-    getData() {
-        return this.store?.getData();
-    }
+    getData = () => this.store?.getData();
+    getQuery = () => this.store?.getQuery();
 
     hostUpdate() {
         if (this.store) return;
