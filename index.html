@@ -48,11 +48,14 @@
             </sl-select>
 
             <label for="select-cheese" class="sr-only">Cheese</label>
-            <select id="select-cheese" class="slct" name="cheese[]" data-purpose="cheese" multiple autocomplete="off">
-                <option value="brie">Brie</option>
-                <option value="cheddar">Cheddar</option>
-                <option value="gouda">Gouda</option>
-            </select>
+            <sl-select size="small" clearable multiple class="data-select" max-options-visible="999"
+                       id="select-cheese" name="cheese"  placeholder="Select cheese" data-purpose="cheese">
+                <sl-icon slot="expand-icon" name="caret-down-fill" class="text-info"></sl-icon>
+
+                <sl-option value="brie">Brie</sl-option>
+                <sl-option value="cheddar">Cheddar</sl-option>
+                <sl-option value="gouda">Gouda</sl-option>
+            </sl-select>
 
         </div>
     </div>

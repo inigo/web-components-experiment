@@ -18,7 +18,6 @@ import '@shoelace-style/shoelace/dist/components/option/option.js';
 import {setBasePath} from '@shoelace-style/shoelace/dist/utilities/base-path.js';
 
 import {setupCssActions} from "./actions/actions.ts";
-import {initSelectors} from "./select/select.ts";
 
 import './savedsearch/saved-search-dialog-element.ts';
 import {registerDataChartComponents} from "./chart/register-components.ts";
@@ -28,5 +27,4 @@ setBasePath(isDev ? '/dist/' : '.');
 
 initCookieConsent();
 setupCssActions();
-initSelectors();
 registerDataChartComponents();
