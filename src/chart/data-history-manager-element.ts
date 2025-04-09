@@ -15,7 +15,7 @@ export class DataHistoryManager extends LitElement {
     private purposes: string[] = ['chartType'];
 
     protected firstUpdated() {
-        requestAnimationFrame(() => this.handleHashChange());
+        requestAnimationFrame(() => this.handleHashChange(false));
     }
 
     /** Update the hash if it has changed, adding to the browser history */
@@ -37,7 +37,7 @@ export class DataHistoryManager extends LitElement {
     }
 
     @listen("hashchange", {attachTo: "window"})
-    handleHashChange = () => {
+    handleHashChange = (raiseEvents: boolean = true) => {
         const hash = window.location.hash.substring(1);
         const params = this.parseHashParams(hash);
 
@@ -73,8 +73,7 @@ export class DataHistoryManager extends LitElement {
                     if (value) selectElement.value = value;
                 }
             }
-
-            selectElement.dispatchEvent(new Event('change', {bubbles: true}));
+            if (raiseEvents) selectElement.dispatchEvent(new Event('change', {bubbles: true}));
         });
     }
 
