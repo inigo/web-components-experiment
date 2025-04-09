@@ -86,20 +86,6 @@
             </select>
         </div>
 
-        <!--
-
-        <sl-dropdown data-purpose="chartType" class="border-primary" distance="2">
-            <button class="btn btn-primary btn-outline" slot="trigger">Chart type
-                <sl-icon name="caret-down"></sl-icon>
-            </button>
-            <sl-menu>
-                <sl-menu-item value="column">Column <sl-icon slot="prefix" src="/column-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
-                <sl-menu-item value="bar">Bar <sl-icon slot="prefix" src="/bar-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
-                <sl-menu-item value="line">Line <sl-icon slot="prefix" src="/line-chart.svg" class="mr-2"></sl-icon></sl-menu-item>
-            </sl-menu>
-        </sl-dropdown>
-        -->
-
         <button class="btn btn-primary btn-outline" data-action="showDialog" data-modal="true" data-target="#savedSearchDialog">Saved searches</button>
 
         <button hx-get="/api/data" hx-trigger="click" hx-target="#result" class="btn btn-primary btn-outline">
