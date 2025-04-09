@@ -19,8 +19,8 @@
           "events": [],
           "js": {
             "properties": [
-              { "name": "store", "type": "DataStore | undefined" },
-              { "name": "chartType", "type": "string" }
+              { "name": "chartType", "type": "string" },
+              { "name": "handleChartTypeChanged" }
             ],
             "events": []
           }
@@ -29,7 +29,21 @@
           "name": "data-event-mediator",
           "description": "Decouples the chart component from the components changing its values, by\nconverting and re-raises the relevant events.\n---\n",
           "doc-url": "",
-          "attributes": [],
+          "attributes": [
+            {
+              "name": "watchedEvents",
+              "description": "a comma-separated list of event names to watch for",
+              "value": {
+                "type": "string[]",
+                "default": "['sl-select', 'sl-change', 'change']"
+              }
+            },
+            {
+              "name": "purposes",
+              "description": "a comma-separated list of \"data-purpose\" values that should be on the elements raising these events",
+              "value": { "type": "string[]", "default": "['chartType']" }
+            }
+          ],
           "events": [],
           "js": { "properties": [], "events": [] }
         },
@@ -37,7 +51,12 @@
           "name": "data-history-manager",
           "description": "Keep the browser history aligned with the current state of the data chart, by\nreading and updating the URL hash.\n---\n\n\n### **Methods:**\n - **updateHash(newValues: _Record<string, string>_): _void_** - Update the hash if it has changed, adding to the browser history",
           "doc-url": "",
-          "attributes": [],
+          "attributes": [
+            {
+              "name": "purposes",
+              "value": { "type": "string[]", "default": "['chartType']" }
+            }
+          ],
           "events": [],
           "js": { "properties": [{ "name": "handleHashChange" }], "events": [] }
         },
@@ -71,12 +90,7 @@
           "doc-url": "",
           "attributes": [],
           "events": [],
-          "js": {
-            "properties": [
-              { "name": "store", "type": "DataStore | undefined" }
-            ],
-            "events": []
-          }
+          "js": { "properties": [], "events": [] }
         },
         {
           "name": "saved-search-dialog",
@@ -89,18 +103,11 @@
                 "type": "SearchStore",
                 "default": "defaultSearchStore"
               }
-            },
-            {
-              "name": "searchable-selector",
-              "value": { "type": "string", "default": "'#searchable'" }
             }
           ],
           "events": [],
           "js": {
-            "properties": [
-              { "name": "store", "type": "SearchStore" },
-              { "name": "searchableSelector", "type": "string" }
-            ],
+            "properties": [{ "name": "store", "type": "SearchStore" }],
             "events": []
           }
         }

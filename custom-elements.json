@@ -13,11 +13,9 @@
           "members": [
             {
               "kind": "field",
-              "name": "store",
-              "type": {
-                "text": "DataStore | undefined"
-              },
-              "default": "undefined"
+              "name": "storeController",
+              "privacy": "private",
+              "default": "new DataStoreController(this)"
             },
             {
               "kind": "field",
@@ -27,11 +25,6 @@
               },
               "default": "'column'",
               "attribute": "chartType"
-            },
-            {
-              "kind": "field",
-              "name": "unsubscribe",
-              "privacy": "private"
             },
             {
               "kind": "field",
@@ -45,16 +38,12 @@
             {
               "kind": "field",
               "name": "handleChartTypeChanged",
-              "privacy": "private"
+              "privacy": "public"
             },
             {
               "kind": "method",
               "name": "updateChartData",
               "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "connectToStore"
             }
           ],
           "attributes": [
@@ -111,7 +100,8 @@
               },
               "privacy": "private",
               "default": "['sl-select', 'sl-change', 'change']",
-              "description": "a comma-separated list of event names to watch for"
+              "description": "a comma-separated list of event names to watch for",
+              "attribute": "watchedEvents"
             },
             {
               "kind": "field",
@@ -121,7 +111,8 @@
               },
               "privacy": "private",
               "default": "['chartType']",
-              "description": "a comma-separated list of \"data-purpose\" values that should be on the elements raising these events"
+              "description": "a comma-separated list of \"data-purpose\" values that should be on the elements raising these events",
+              "attribute": "purposes"
             },
             {
               "kind": "field",
@@ -137,8 +128,29 @@
               "privacy": "private"
             }
           ],
+          "attributes": [
+            {
+              "name": "watchedEvents",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "['sl-select', 'sl-change', 'change']",
+              "description": "a comma-separated list of event names to watch for",
+              "fieldName": "watchedEvents"
+            },
+            {
+              "name": "purposes",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "['chartType']",
+              "description": "a comma-separated list of \"data-purpose\" values that should be on the elements raising these events",
+              "fieldName": "purposes"
+            }
+          ],
           "superclass": {
-            "name": "HTMLElement"
+            "name": "LitElement",
+            "package": "lit"
           },
           "tagName": "data-event-mediator",
           "customElement": true
@@ -179,7 +191,8 @@
                 "text": "string[]"
               },
               "privacy": "private",
-              "default": "['chartType']"
+              "default": "['chartType']",
+              "attribute": "purposes"
             },
             {
               "kind": "method",
@@ -222,8 +235,19 @@
               ]
             }
           ],
+          "attributes": [
+            {
+              "name": "purposes",
+              "type": {
+                "text": "string[]"
+              },
+              "default": "['chartType']",
+              "fieldName": "purposes"
+            }
+          ],
           "superclass": {
-            "name": "HTMLElement"
+            "name": "LitElement",
+            "package": "lit"
           },
           "tagName": "data-history-manager",
           "customElement": true
@@ -320,6 +344,10 @@
             },
             {
               "kind": "method",
+              "name": "getQuery"
+            },
+            {
+              "kind": "method",
               "name": "getData",
               "return": {
                 "type": {
@@ -413,20 +441,9 @@
           "members": [
             {
               "kind": "field",
-              "name": "store",
-              "type": {
-                "text": "DataStore | undefined"
-              },
-              "default": "undefined"
-            },
-            {
-              "kind": "field",
-              "name": "unsubscribe",
-              "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "connectToStore"
+              "name": "storeController",
+              "privacy": "private",
+              "default": "new DataStoreController(this)"
             }
           ],
           "superclass": {
@@ -467,21 +484,18 @@
           "members": [
             {
               "kind": "field",
+              "name": "storeController",
+              "privacy": "private",
+              "default": "new DataStoreController(this)"
+            },
+            {
+              "kind": "field",
               "name": "store",
               "type": {
                 "text": "SearchStore"
               },
               "default": "defaultSearchStore",
               "attribute": "store"
-            },
-            {
-              "kind": "field",
-              "name": "searchableSelector",
-              "type": {
-                "text": "string"
-              },
-              "default": "'#searchable'",
-              "attribute": "searchable-selector"
             },
             {
               "kind": "field",
@@ -519,14 +533,6 @@
               },
               "default": "defaultSearchStore",
               "fieldName": "store"
-            },
-            {
-              "name": "searchable-selector",
-              "type": {
-                "text": "string"
-              },
-              "default": "'#searchable'",
-              "fieldName": "searchableSelector"
             }
           ],
           "superclass": {
