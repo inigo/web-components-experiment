@@ -13,7 +13,7 @@ export class DataStore extends LitElement {
     private relevantChanges = ['cheese'];
 
     @property()
-    private baseUrl = "/data.json";
+    private baseUrl = "./data.json";
 
     @property()
     private fakeData = false;
@@ -21,7 +21,7 @@ export class DataStore extends LitElement {
     async fetchData() {
         console.debug("Retrieving data for data store");
         try {
-            const url = new URL(this.baseUrl, window.location.origin);
+            const url = new URL(this.baseUrl, window.location.href);
             url.search = new URLSearchParams(this.queryParams).toString();
             // When testing with local data and no server, using a _ not a query string means
             // the fake data can be served from the local filesystem easily
